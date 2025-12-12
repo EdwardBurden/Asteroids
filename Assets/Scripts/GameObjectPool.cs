@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 
 public interface IPool
@@ -16,14 +17,16 @@ public class GameObjectPool<T> : IPool where T : PooledGameObject
     private Transform m_parent;
     private T m_prefab;
     private int m_size;
+    private Action<T> m_deSpawnCallback;
 
 
-    public void Warm(T prefab, int size, Transform parent, bool allowResize = true)
+    public void Warm(T prefab, int size, Transform parent, bool allowResize = true, Action<T> deSpawnCallback = null)
     {
         m_allowResize = allowResize;
         m_parent = parent;
         m_prefab = prefab;
         m_size = size;
+        m_deSpawnCallback = deSpawnCallback;
         for (int i = 0; i < size; i++)
         {
             SpawnInternal();
@@ -56,6 +59,7 @@ public class GameObjectPool<T> : IPool where T : PooledGameObject
     {
         m_activePool.Remove((T)activeObject);
         m_inactivePool.Push((T)activeObject);
+        m_deSpawnCallback?.Invoke((T)activeObject);
     }
 }
 
@@ -78,6 +82,6 @@ public abstract class PooledGameObject : MonoBehaviour, IPoolable
     public void Spawn(IPool poolHandle)
     {
         m_poolHandle = poolHandle;
-        this.gameObject.SetActive(true);
+        //this.gameObject.SetActive(true);
     }
 }

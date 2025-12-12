@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3c5a8c01eadec74e953499898a50600, type: 3}
-  m_Name: Asteroid Small
+  m_Name: Asteroid Too Big
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
-  Name: Asteroid Small
-  Prefab: {fileID: 2399992297712953638, guid: a60196c0f2e4b4042a570b598c1815e0, type: 3}
+  Name: Asteroid Big
+  Prefab: {fileID: 2399992297712953638, guid: 97ac0fd8de064bd4d9207c7c48c3622c, type: 3}
   MinSpeed: 0
   MaxSpeed: 0
-  DamageDealt: 0
+  ColliderWithAsteroids: 0
   AliveTimeMS: 9000
+  m_childAsteroids:
+  - {fileID: 11400000, guid: c8941d1feff4ec34bb8f4d2adf02eee1, type: 2}
+  - {fileID: 11400000, guid: c8941d1feff4ec34bb8f4d2adf02eee1, type: 2}

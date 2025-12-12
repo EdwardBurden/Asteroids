@@ -4,16 +4,17 @@ using UnityEngine;
 public class GameData : ScriptableObject
 {
     [SerializeField] private int m_seed;
-    [SerializeField] private ObstacleData[] m_obstacleData; //todo have these collected  without manyall pulling in
+    [SerializeField] private AsteroidData[] m_asteroidData; //todo have these collected  without manyall pulling in
     [SerializeField] private LevelData[] m_levelData;
     [SerializeField] private PlayerData m_playerData; //for futrue player picking 
 
-    public ObstacleData[] ObstacleData => m_obstacleData;
+    public AsteroidData[] AsteroidData => m_asteroidData;
     public LevelData[] LevelData => m_levelData;
     public bool UseSeed => m_seed != 0;
     public int Seed => m_seed;
     public PlayerData PlayerData => m_playerData;
 
+    public int MaxLevel => m_levelData.Length;
     private void OnValidate()
     {
         //make sure only one of this exists in the project

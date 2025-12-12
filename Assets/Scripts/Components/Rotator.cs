@@ -12,13 +12,13 @@ public class Rotator : MonoBehaviour
 
     private void Start()
     {
-        SetDirectionAndSpeed(m_initialSpeed, m_rotationAmountsEuler);
+        SetDirectionAndSpeed(UnityEngine.Random.Range(1,100), UnityEngine.Random.Range(-10, 10));
     }
 
-    public void SetDirectionAndSpeed(float speed, Vector3 direction) 
+    public void SetDirectionAndSpeed(float speed, float spin)
     {
         m_rotationSpeed = speed;
-        m_rotaionAmountNormalized = direction.normalized;
+        m_rotaionAmountNormalized = Vector3.forward * spin;
     }
 
     private void Update()

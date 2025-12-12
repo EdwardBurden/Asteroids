@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   Name: 'Easy Level '
   Background: {fileID: 21300000, guid: be2bb16650cd580448bd17b034a54a63, type: 3}
-  MinObstacles: 3
-  MaxObstacles: 3
+  MinAsteroids: 1
+  MaxAsteroids: 3
   MaxTime: 10
