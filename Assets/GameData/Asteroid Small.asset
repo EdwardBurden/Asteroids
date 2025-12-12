@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Asteroid Small
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
   Name: Asteroid Small
-  Obstacle: {fileID: 8074098267510440984, guid: a60196c0f2e4b4042a570b598c1815e0, type: 3}
+  Prefab: {fileID: 8074098267510440984, guid: a60196c0f2e4b4042a570b598c1815e0, type: 3}
   MinSpeed: 0
   MaxSpeed: 0
   DamageDealt: 0

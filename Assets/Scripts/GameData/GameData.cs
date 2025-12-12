@@ -6,11 +6,13 @@ public class GameData : ScriptableObject
     [SerializeField] private int m_seed;
     [SerializeField] private ObstacleData[] m_obstacleData; //todo have these collected  without manyall pulling in
     [SerializeField] private LevelData[] m_levelData;
+    [SerializeField] private PlayerData m_playerData; //for futrue player picking 
 
     public ObstacleData[] ObstacleData => m_obstacleData;
     public LevelData[] LevelData => m_levelData;
     public bool UseSeed => m_seed != 0;
     public int Seed => m_seed;
+    public PlayerData PlayerData => m_playerData;
 
     private void OnValidate()
     {

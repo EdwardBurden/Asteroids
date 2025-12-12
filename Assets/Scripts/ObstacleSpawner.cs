@@ -17,7 +17,7 @@ public class ObstacleSpawner : MonoBehaviour
         foreach (ObstacleData obstacleDefinition in gameData.ObstacleData)
         {
             var pool = new GameObjectPool<Obstacle>();
-            pool.Warm(obstacleDefinition.Obstacle, poolSize, m_poolParent);
+            pool.Warm(obstacleDefinition.Prefab, poolSize, m_poolParent);
             m_obstaclePools.Add(obstacleDefinition, pool);
         }
     }

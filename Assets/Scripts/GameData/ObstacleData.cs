@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObstacleData : ScriptableObject
 {
     public string Name;
-    public Obstacle Obstacle;
+    public Obstacle Prefab;
     public int MinSpeed;
     public int MaxSpeed;
     public int DamageDealt;
