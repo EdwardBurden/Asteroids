@@ -15,3 +15,5 @@ MonoBehaviour:
   Name: Player
   Prefab: {fileID: 3641499879743083933, guid: d465a29d409a26943a642d3096e2adea, type: 3}
   Health: 5
+  BulletSpawnIntervalMS: 0
+  Bullets: {fileID: 11400000, guid: 098332caa7655ef4190da326661746a0, type: 2}

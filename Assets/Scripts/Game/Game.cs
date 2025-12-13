@@ -29,6 +29,7 @@ public sealed partial class Game : MonoBehaviour
     public LevelManager LevelManager => m_levelManager;
 
     public AsteroidManager AsteroidManager => m_asteroidManager;
+    public GameInputManager InputManager => m_playerInput;
 
     private void Awake()
     {
@@ -62,9 +63,6 @@ public sealed partial class Game : MonoBehaviour
         m_playerInput.Startup();
         m_playerController.Startup();
         m_asteroidManager.Setup();
-        m_playerInput.OnMove += m_playerController.OnMoveInput;
-        m_playerInput.OnLook_GamePad += m_playerController.OnLookGamePadInput;
-        m_playerInput.OnLook_Mouse += m_playerController.OnLookMouseInput;
         m_gameStatemachine.RegisterState(GameState.Playing, Playing_OnEnter, Playing_OnUpdate, Playing_OnExit);
         m_gameStatemachine.RegisterState(GameState.Loading, onUpdate : ()=> { m_gameStatemachine.ChangeState(GameState.Playing); }); //todo add method with wait time maybe
         m_gameStatemachine.Init(GameState.Loading);

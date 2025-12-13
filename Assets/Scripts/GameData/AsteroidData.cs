@@ -1,7 +1,7 @@
 using Unity.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Asteroid", menuName = "GameData/AsteroidData")]
+[CreateAssetMenu(fileName = "Asteroid", menuName = "GameData/AsteroidData")]    
 public class AsteroidData : ScriptableObject
 {
     public string Name;

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
     [SerializeField] private float m_deadZoneAmount = 0.05f;
     private const string MoveActionName = "Move";
     private const string LookActionName = "Look";
+    private const string ShootActionName = "Attack";
 
     public SupportedInputDevices CurrentInput { get; private set; }
 
@@ -26,16 +28,25 @@ public class GameInputManager : MonoBehaviour, IGameSystem
 
     public delegate void MouseDelegate(Vector2 movement, Vector3 mousePosition);
     public delegate void GamePadDelegate(Vector2 movement);
+
     public event GamePadDelegate OnMove;
     public event MouseDelegate OnLook_Mouse;
     public event GamePadDelegate OnLook_GamePad;
+    public Action OnShootPressed;
     private bool m_initialised;
 
     public void Startup()
     {
         m_move = InputSystem.actions.FindAction(MoveActionName);
         m_look = InputSystem.actions.FindAction(LookActionName);
+        m_shoot = InputSystem.actions.FindAction(ShootActionName);
+        m_shoot.performed += M_shoot_performed;
         m_initialised = true;
+    }
+
+    private void M_shoot_performed(InputAction.CallbackContext obj)
+    {
+        OnShootPressed?.Invoke();
     }
 
     public void ShutDown()
@@ -71,6 +82,8 @@ public class GameInputManager : MonoBehaviour, IGameSystem
             Assert.Fail($"Device: {m_playerInput.currentControlScheme} is not supported");
         }
     }
+
+
 
     private void OnMovePerformed()
     {
