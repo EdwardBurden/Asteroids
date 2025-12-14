@@ -7,6 +7,9 @@ public class GameData : ScriptableObject
     [SerializeField] private AsteroidData[] m_asteroidData; //todo have these collected  without manyall pulling in
     [SerializeField] private LevelData[] m_levelData;
     [SerializeField] private PlayerData m_playerData; //for futrue player picking 
+    [SerializeField] private Sprite m_lostBackground;
+    [SerializeField] private Sprite m_wonBackground;
+
 
     public AsteroidData[] AsteroidData => m_asteroidData;
     public LevelData[] LevelData => m_levelData;

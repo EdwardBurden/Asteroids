@@ -8,5 +8,6 @@ public class PlayerData : ScriptableObject
     public int Health;
     public float BulletSpawnIntervalMS;
     public BulletData Bullets;
-
+    public Sprite PlayerIconAlive;
+    public Sprite PlayerIconDead;
 }

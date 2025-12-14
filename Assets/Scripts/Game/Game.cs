@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using static UnityEngine.Audio.GeneratorInstance;
 
@@ -8,15 +9,16 @@ public sealed partial class Game : MonoBehaviour
         Loading,
         Playing,
         Paused,
-        Dead,
+        Lost,
         Won,
         Leaving
     }
-    private struct GameStateData //todo
+    public struct GameStateData //todo
     {
         public int Level;
         public int Seed;
-
+        public int Score;
+        public int PlayerHealthRemaining;
     }
 
     //[SerializeField] ObstacleSpawner m_obstacleSpawner;
@@ -24,12 +26,15 @@ public sealed partial class Game : MonoBehaviour
     [SerializeField] private GameInputManager m_playerInput;
     [SerializeField] private PlayerController m_playerController;
     [SerializeField] private AsteroidManager m_asteroidManager;
+    [SerializeField] private HUD m_hud;
 
     public static Game Instance { get; private set; }
     public LevelManager LevelManager => m_levelManager;
 
     public AsteroidManager AsteroidManager => m_asteroidManager;
     public GameInputManager InputManager => m_playerInput;
+    public PlayerController PlayerController => m_playerController;
+    public GameStateData GAmeStateData => m_gameStateData;
 
     private void Awake()
     {
@@ -55,6 +60,7 @@ public sealed partial class Game : MonoBehaviour
     private void Update()
     {
         m_gameStatemachine.Update();
+
     }
 
     public void Startup()
@@ -63,6 +69,7 @@ public sealed partial class Game : MonoBehaviour
         m_playerInput.Startup();
         m_playerController.Startup();
         m_asteroidManager.Setup();
+        m_hud.Setup();
         m_gameStatemachine.RegisterState(GameState.Playing, Playing_OnEnter, Playing_OnUpdate, Playing_OnExit);
         m_gameStatemachine.RegisterState(GameState.Loading, onUpdate : ()=> { m_gameStatemachine.ChangeState(GameState.Playing); }); //todo add method with wait time maybe
         m_gameStatemachine.Init(GameState.Loading);
@@ -74,5 +81,10 @@ public sealed partial class Game : MonoBehaviour
         m_levelManager.ShutDown();
         m_playerInput.ShutDown();
         m_gameStatemachine.Shutdown();
+    }
+
+    internal void PlayerTakenDamage(int damageTaken)
+    {
+        m_gameStateData.PlayerHealthRemaining -= damageTaken;
     }
 }

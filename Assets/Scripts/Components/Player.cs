@@ -1,19 +1,20 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
- [SerializeField]   private Transform m_bulletRoot;
+    [SerializeField] private Transform m_bulletRoot;
+
+    public Action OnDamaged;
     public Vector3 BulletRoot => m_bulletRoot.position;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.GetComponent<Asteroid>() != null)
+        {
+            OnDamaged?.Invoke();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

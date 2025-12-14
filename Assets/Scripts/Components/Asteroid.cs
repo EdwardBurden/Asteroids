@@ -46,13 +46,12 @@ public class Asteroid : PooledGameObject
         if (TimeAlive < 0.2f)
             return;
 
-        if (other.GetComponent<Bullet>() != null)
-        {
+        if (other.GetComponent<Asteroid>())
+            return;
 
-            Game.Instance.AsteroidManager.OnAsteroidHit(other, this, m_data);
+        Game.Instance.AsteroidManager.OnAsteroidHit(other, this, m_data);
+        Destroy();
 
-            Destroy();
-        }
     }
 
     public void SetRandomThing(Vector2 direction)

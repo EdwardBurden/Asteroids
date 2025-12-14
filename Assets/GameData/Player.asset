@@ -17,3 +17,5 @@ MonoBehaviour:
   Health: 5
   BulletSpawnIntervalMS: 0
   Bullets: {fileID: 11400000, guid: 098332caa7655ef4190da326661746a0, type: 2}
+  PlayerIconAlive: {fileID: 21300000, guid: d13e3f44f5025d4478c98a607270939f, type: 3}
+  PlayerIconDead: {fileID: 21300000, guid: 6dc44d4be49b9904fafed34ecbbda2ad, type: 3}
