@@ -18,7 +18,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1949f8052a1fa8047bad648f9c15913f, type: 2}
   - {fileID: 11400000, guid: 998379a24da30ad4fae5288c081b5e6a, type: 2}
   m_levelData:
-  - {fileID: 11400000, guid: 48bbdba77afbcf44bbc96c551d43f5b7, type: 2}
-  - {fileID: 11400000, guid: 48bbdba77afbcf44bbc96c551d43f5b7, type: 2}
-  - {fileID: 11400000, guid: 4f1634a3a50b8134d8248a19d314732f, type: 2}
+  - {fileID: 11400000, guid: b511e4e041164d142b728b1b3ef5f5d4, type: 2}
+  - {fileID: 11400000, guid: b511e4e041164d142b728b1b3ef5f5d4, type: 2}
+  - {fileID: 11400000, guid: b511e4e041164d142b728b1b3ef5f5d4, type: 2}
   m_playerData: {fileID: 11400000, guid: bda4b6a4bfda0ad4497c3cab89a6d690, type: 2}
+  m_lostBackground: {fileID: 21300000, guid: 3f2269de8078ce845959c0fbe5db590f, type: 3}
+  m_wonBackground: {fileID: 21300000, guid: be2bb16650cd580448bd17b034a54a63, type: 3}

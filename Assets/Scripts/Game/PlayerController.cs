@@ -18,15 +18,22 @@ public class PlayerController : MonoBehaviour, IGameSystem
     {
         CurrentPlayerData = App.Instance.GameData.PlayerData;
         m_bulletData = CurrentPlayerData.Bullets;
-        m_player = GameObject.Instantiate(CurrentPlayerData.Prefab, m_playerRoot);
-        m_player.OnDamaged += OnDamageTaken;
-
-
         Game.Instance.InputManager.OnMove += OnMoveInput;
         Game.Instance.InputManager.OnLook_GamePad += OnLookGamePadInput;
         Game.Instance.InputManager.OnLook_Mouse += OnLookMouseInput;
         Game.Instance.InputManager.OnShootPressed += Shoot;
         m_bulletPool.Warm(m_bulletData.Prefab, 12, m_bulletPoolTransform);
+    }
+
+    public void ReadyPlayer() 
+    {
+        if (m_player != null)
+        {
+            GameObject.Destroy(m_player.gameObject);
+        }
+        m_player = GameObject.Instantiate(CurrentPlayerData.Prefab, m_playerRoot);
+        m_player.Setup(CurrentPlayerData);
+        m_player.Damaged += OnDamageTaken;
     }
 
     private void Shoot()
@@ -54,7 +61,7 @@ public class PlayerController : MonoBehaviour, IGameSystem
 
     internal void OnMoveInput(Vector2 movement)
     {
-        m_player.transform.position += new Vector3(movement.x, movement.y) * Time.deltaTime;
+        m_player.transform.position += new Vector3(movement.x, movement.y) * Time.deltaTime * CurrentPlayerData.Speed;
     }
 
     internal void OnLookGamePadInput(Vector2 movement)

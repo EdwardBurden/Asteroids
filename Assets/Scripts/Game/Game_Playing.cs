@@ -4,11 +4,14 @@ public sealed partial class Game : MonoBehaviour
 {
     private void Playing_OnEnter(GameState previousState)
     {
+        //todo check last state
         m_gameStateData.Level = 0;
         m_gameStateData.Seed = App.Instance.GameData.UseSeed ? App.Instance.GameData.Seed : (int)System.DateTime.Now.Ticks;
         UnityEngine.Random.InitState(m_gameStateData.Seed);
         m_gameStateData.PlayerHealthRemaining = m_playerController.CurrentPlayerData.Health;
         StartNextLevel();
+        m_playerController.ReadyPlayer();
+        m_hud.Setup();
     }
 
     private void StartNextLevel()

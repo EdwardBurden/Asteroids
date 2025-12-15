@@ -1,20 +1,29 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(HealthComponent))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private Transform m_bulletRoot;
+    [SerializeField] private HealthComponent m_healthComponent;
 
-    public Action OnDamaged;
+    public Action Damaged;
     public Vector3 BulletRoot => m_bulletRoot.position;
 
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Setup(PlayerData m_data) 
     {
-        if (other.GetComponent<Asteroid>() != null)
-        {
-            OnDamaged?.Invoke();
-        }
+        m_healthComponent.Setup(m_data.Health, m_data.InvunerableTimeMS);
+        m_healthComponent.DamageTaken += DamageTaken;
     }
 
+    private void OnDisable()
+    {
+        m_healthComponent.DamageTaken -= DamageTaken;
+    }
+
+
+    private void DamageTaken(int damage) 
+    {
+        Damaged?.Invoke();
+    }
 }

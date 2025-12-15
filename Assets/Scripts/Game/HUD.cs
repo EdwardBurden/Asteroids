@@ -7,6 +7,8 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] private Transform m_playerHealthRoot;
     [SerializeField] private GameObject m_playerHealthPrefab;
+    [SerializeField] private GameObject m_winScreen;
+    [SerializeField] private GameObject m_loseScreen;
 
     [SerializeField] private TMP_Text m_score;
     [SerializeField] private TMP_Text m_level;
@@ -16,6 +18,13 @@ public class HUD : MonoBehaviour
 
     public void Setup()
     {
+        for (int i = 0; i < m_playerHealthRoot.childCount; i++)
+        {
+            GameObject.Destroy(m_playerHealthRoot.GetChild(i).gameObject);
+
+        }
+
+
         var playerData = Game.Instance.PlayerController.CurrentPlayerData;
         m_healthObjects = new GameObject[playerData.Health];
         for (int i = 0; i < playerData.Health; i++)
@@ -50,5 +59,30 @@ public class HUD : MonoBehaviour
         }
 
         m_cachedState = m_gameStateData;
+    }
+
+    public void Action_Replay() 
+    {
+        Game.Instance.Replay();
+    }
+
+    internal void ShowWonScreen()
+    {
+        m_winScreen.SetActive(true);
+    }
+
+    internal void HideWonScreen()
+    {
+        m_winScreen.SetActive(false);
+    }
+
+    internal void ShowLostScreen()
+    {
+        m_winScreen.SetActive(true);
+    }
+
+    internal void HideLostScreen()
+    {
+        m_winScreen.SetActive(false);
     }
 }

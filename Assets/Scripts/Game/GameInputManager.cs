@@ -34,6 +34,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
     public event GamePadDelegate OnLook_GamePad;
     public Action OnShootPressed;
     private bool m_initialised;
+    private bool m_inputPaused;
 
     public void Startup()
     {
@@ -42,10 +43,13 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         m_shoot = InputSystem.actions.FindAction(ShootActionName);
         m_shoot.performed += M_shoot_performed;
         m_initialised = true;
+        m_inputPaused = false;
     }
 
     private void M_shoot_performed(InputAction.CallbackContext obj)
     {
+        if (m_inputPaused)
+            return;
         OnShootPressed?.Invoke();
     }
 
@@ -56,7 +60,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
 
     private void Update()
     {
-        if (!m_initialised)
+        if (!m_initialised || m_inputPaused)
             return;
 
         M_playerInput_onControlsChanged();
@@ -112,5 +116,15 @@ public class GameInputManager : MonoBehaviour, IGameSystem
             default:
                 break;
         }
+    }
+
+    internal void PauseInput()
+    {
+        m_inputPaused = true;
+    }
+
+    public void ResumeInput() 
+    {
+        m_inputPaused = false;
     }
 }

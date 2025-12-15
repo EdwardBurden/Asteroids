@@ -69,9 +69,13 @@ public sealed partial class Game : MonoBehaviour
         m_playerInput.Startup();
         m_playerController.Startup();
         m_asteroidManager.Setup();
-        m_hud.Setup();
         m_gameStatemachine.RegisterState(GameState.Playing, Playing_OnEnter, Playing_OnUpdate, Playing_OnExit);
-        m_gameStatemachine.RegisterState(GameState.Loading, onUpdate : ()=> { m_gameStatemachine.ChangeState(GameState.Playing); }); //todo add method with wait time maybe
+        m_gameStatemachine.RegisterState(GameState.Lost, Lost_OnEnter, Lost_OnUpdate, Lost_OnExit);
+        m_gameStatemachine.RegisterState(GameState.Won, Won_OnEnter, Won_OnUpdate, Won_OnExit);
+        m_gameStatemachine.RegisterState(GameState.Loading, onUpdate : ()=> 
+        {
+            m_gameStatemachine.ChangeState(GameState.Playing);
+        }); //todo add method with wait time maybe
         m_gameStatemachine.Init(GameState.Loading);
         //m_gameStatemachine.RegisterState(GameState.Paused, Playing_OnEnter, Playing_OnUpdate, Playing_OnExit);
     }
@@ -86,5 +90,11 @@ public sealed partial class Game : MonoBehaviour
     internal void PlayerTakenDamage(int damageTaken)
     {
         m_gameStateData.PlayerHealthRemaining -= damageTaken;
+    }
+
+    internal void Replay()
+    {
+        //any restart work.
+        m_gameStatemachine.ChangeState(GameState.Playing);
     }
 }

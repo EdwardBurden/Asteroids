@@ -17,7 +17,7 @@ public class GameData : ScriptableObject
     public int Seed => m_seed;
     public PlayerData PlayerData => m_playerData;
 
-    public int MaxLevel => m_levelData.Length;
+    public int MaxLevel => m_levelData.Length -1;
     private void OnValidate()
     {
         //make sure only one of this exists in the project
@@ -26,7 +26,7 @@ public class GameData : ScriptableObject
 
     public LevelData GetLevelData(int level) 
     {
-        if (level < 0 || level > m_levelData.Length)
+        if (level < 0 || level >= m_levelData.Length)
             return null;
         return m_levelData[level];
     }

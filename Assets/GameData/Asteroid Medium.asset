@@ -15,10 +15,14 @@ MonoBehaviour:
   Name: Asteroid Big
   Prefab: {fileID: 2399992297712953638, guid: caf7dc8256df4064388e2f15168c28c2, type: 3}
   MinSpeed: 0
-  MaxSpeed: 0
-  DamageDealt: 0
+  MaxSpeed: 1
+  ColliderWithAsteroids: 1
   AliveTimeMS: 9000
+  Score: 0
   m_childAsteroids:
   - {fileID: 11400000, guid: 998379a24da30ad4fae5288c081b5e6a, type: 2}
   - {fileID: 11400000, guid: 998379a24da30ad4fae5288c081b5e6a, type: 2}
   - {fileID: 11400000, guid: 998379a24da30ad4fae5288c081b5e6a, type: 2}
+  Damage: 1
+  Health: 1
+  InvunerableTimeMS: 1

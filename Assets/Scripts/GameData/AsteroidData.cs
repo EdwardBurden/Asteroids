@@ -10,9 +10,10 @@ public class AsteroidData : ScriptableObject
     public int MaxSpeed;
     public bool ColliderWithAsteroids = true;
     public float AliveTimeMS;
-
+    public int Score;
     public AsteroidData[] m_childAsteroids;
-
-
+    public int Damage;
+    public int Health;
+    public int InvunerableTimeMS;
     //etc
 }

@@ -1,16 +1,22 @@
 using UnityEngine;
+using static Game;
 
-public class Game_Lost : MonoBehaviour
+public sealed partial class Game : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Lost_OnEnter(GameState previousState)
     {
-        
+        m_playerInput.PauseInput();
+        m_hud.ShowLostScreen();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Lost_OnUpdate()
     {
-        
+
+    }
+
+    private void Lost_OnExit(GameState nextState)
+    {
+        m_playerInput.ResumeInput();
+        m_hud.HideLostScreen();
     }
 }

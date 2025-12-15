@@ -105,6 +105,8 @@ GameObject:
   - component: {fileID: 8819345849848830485}
   - component: {fileID: 1969456395343356861}
   - component: {fileID: 4740086986485081012}
+  - component: {fileID: 4870347665902068155}
+  - component: {fileID: 4210019952403347657}
   m_Layer: 0
   m_Name: Asteroid Small
   m_TagString: Untagged
@@ -156,6 +158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
   m_rotator: {fileID: 8734352762571466597}
+  m_damageComponent: {fileID: 4870347665902068155}
+  m_healthComponent: {fileID: 4210019952403347657}
+  direction: {x: 0, y: 0, z: 0}
 --- !u!114 &8819345849848830485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,3 +236,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4870347665902068155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123151443579244816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e669e94385bcb6d40a7c7dea99a4b264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageComponent
+--- !u!114 &4210019952403347657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123151443579244816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64c7a554523e7349b92d0ffa531e1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
+  m_flashGap: 0
+  m_icon: {fileID: 1480694991238041606}
+  m_flashColour: {r: 0, g: 0, b: 0, a: 0}

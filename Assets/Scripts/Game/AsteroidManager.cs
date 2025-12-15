@@ -8,7 +8,9 @@ using UnityEngine;
 public class AsteroidManager : MonoBehaviour
 {
     [SerializeField] private Transform m_poolParent;
+    [SerializeField] private PooledParticle m_collsionPrefab;
 
+    private readonly GameObjectPool<PooledParticle> m_collisonParticles = new();
     private readonly Dictionary<AsteroidData, GameObjectPool<Asteroid>> m_asteroidPools = new();
 
     private readonly HashSet<Asteroid> m_managerAsteroids = new HashSet<Asteroid>();
@@ -22,6 +24,9 @@ public class AsteroidManager : MonoBehaviour
             pool.Warm(obstacleDefinition.Prefab, poolSize, m_poolParent, deSpawnCallback: OnAsteroidDespawned);
             m_asteroidPools.Add(obstacleDefinition, pool);
         }
+
+        m_collisonParticles.Warm(m_collsionPrefab, poolSize, m_poolParent);
+
     }
 
     public void SpawnWave(int level)
@@ -36,16 +41,12 @@ public class AsteroidManager : MonoBehaviour
         }
     }
 
-    private void SpawnAsteroid(AsteroidData asteroidData, Vector3 enemy, Vector3 damaged)
+    private void SpawnAsteroid(AsteroidData asteroidData,Vector3 position)
     {
         var asteroid = m_asteroidPools[asteroidData].Allocate();
         asteroid.Setup(asteroidData);
-        Vector3 oppositeToDamage = (damaged - enemy).normalized;
-        //todo need to explod away from center and source of damage
-        asteroid.transform.position = damaged;
+        asteroid.transform.position = position;
         m_managerAsteroids.Add(asteroid);
-
-        asteroid.SetRandomThing(oppositeToDamage);
         asteroid.gameObject.SetActive(true);
     }
 
@@ -56,7 +57,13 @@ public class AsteroidManager : MonoBehaviour
         asteroid.transform.position = Game.Instance.LevelManager.GetRandomPointInBounds();
         m_managerAsteroids.Add(asteroid);
         asteroid.gameObject.SetActive(true);
+    }
 
+    public void SpawnCollisonFX(Vector3 position)
+    {
+        var particle = m_collisonParticles.Allocate();
+        particle.transform.position = position;
+        particle.gameObject.SetActive(true);
     }
 
     private void OnAsteroidDespawned(Asteroid asteroid)
@@ -70,11 +77,11 @@ public class AsteroidManager : MonoBehaviour
         return m_managerAsteroids.Count;
     }
 
-    internal void OnAsteroidHit(Collider2D other, Asteroid asteroid, AsteroidData data)
+    public void SpawnChildren(Asteroid asteroid, AsteroidData data)
     {
         foreach (var child in data.m_childAsteroids)
         {
-            SpawnAsteroid(child, other.transform.position, asteroid.transform.position);
+            SpawnAsteroid(child,asteroid.transform.position);
         }
     }
 }

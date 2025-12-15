@@ -32,10 +32,10 @@ RectTransform:
   - {fileID: 4131203873863580223}
   m_Father: {fileID: 5198921689735509280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -275}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1824112771678990738
 MonoBehaviour:
@@ -89,10 +89,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5198921689735509280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -151.66751}
+  m_SizeDelta: {x: 500, y: 196.66501}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7121407620432463106
 CanvasRenderer:
@@ -364,10 +364,10 @@ RectTransform:
   - {fileID: 419613227253458554}
   m_Father: {fileID: 8624038771813186597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -275}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5562206091871926926
 MonoBehaviour:
@@ -404,7 +404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7632691801175841819
 RectTransform:
   m_ObjectHideFlags: 0
@@ -601,10 +601,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8624038771813186597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -151.66751}
+  m_SizeDelta: {x: 500, y: 196.66501}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8796542256634409609
 CanvasRenderer:
@@ -879,10 +879,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8624038771813186597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -26.6675}
+  m_SizeDelta: {x: 500, y: 53.335}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8253504796274763871
 CanvasRenderer:
@@ -1402,6 +1402,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUD
   m_playerHealthRoot: {fileID: 8133350374048603692}
   m_playerHealthPrefab: {fileID: 4913269409544323725, guid: 3e7df47cf1ed661439e286838ded1798, type: 3}
+  m_winScreen: {fileID: 3124617943501232605}
+  m_loseScreen: {fileID: 8147004547522364323}
   m_score: {fileID: 1303084380298377883}
   m_level: {fileID: 4675029009965611822}
 --- !u!1 &7415755739724092115
@@ -1951,7 +1953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2344429270696815213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2005,10 +2007,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5198921689735509280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -26.6675}
+  m_SizeDelta: {x: 500, y: 53.335}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2845185315301256595
 CanvasRenderer:
@@ -2309,7 +2311,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4532894791368662251}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1353811546108772193}
+        m_TargetAssemblyTypeName: HUD, Assembly-CSharp
+        m_MethodName: Action_Replay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9201116103648182772
 GameObject:
   m_ObjectHideFlags: 0

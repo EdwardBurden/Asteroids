@@ -1,16 +1,21 @@
 using UnityEngine;
 
-public class Game_Won : MonoBehaviour
+public sealed partial class Game : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Won_OnEnter(GameState previousState)
     {
-        
+        m_playerInput.PauseInput();
+        m_hud.ShowWonScreen();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Won_OnUpdate()
     {
-        
+
+    }
+
+    private void Won_OnExit(GameState nextState)
+    {
+        m_playerInput.ResumeInput();
+        m_hud.HideWonScreen();
     }
 }

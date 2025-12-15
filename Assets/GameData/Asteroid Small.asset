@@ -15,6 +15,11 @@ MonoBehaviour:
   Name: Asteroid Small
   Prefab: {fileID: 2399992297712953638, guid: a60196c0f2e4b4042a570b598c1815e0, type: 3}
   MinSpeed: 0
-  MaxSpeed: 0
-  DamageDealt: 0
+  MaxSpeed: 2
+  ColliderWithAsteroids: 1
   AliveTimeMS: 9000
+  Score: 0
+  m_childAsteroids: []
+  Damage: 1
+  Health: 1
+  InvunerableTimeMS: 1
