@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4585088070100038864}
   - component: {fileID: 1480694991238041606}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,8 @@ GameObject:
   - component: {fileID: 4740086986485081012}
   - component: {fileID: 3427990388755203921}
   - component: {fileID: 7264478081047744160}
-  m_Layer: 0
+  - component: {fileID: 1956291123146898469}
+  m_Layer: 6
   m_Name: Asteroid Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,10 +158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88ea658080614248a4b55b516db36cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
-  m_rotator: {fileID: 8734352762571466597}
   m_damageComponent: {fileID: 3427990388755203921}
   m_healthComponent: {fileID: 7264478081047744160}
-  direction: {x: 0, y: 0, z: 0}
+  m_constantMovementComponent: {fileID: 1956291123146898469}
 --- !u!114 &8819345849848830485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,3 +263,15 @@ MonoBehaviour:
   m_flashGap: 0
   m_icon: {fileID: 1480694991238041606}
   m_flashColour: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1956291123146898469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123151443579244816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce40141f1d0a5d344b92e117ac08b265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConstantMovementComponent

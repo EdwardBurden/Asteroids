@@ -1,12 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Bullet", menuName = "GameData/BulletData")]
-public class BulletData : ScriptableObject
+public class BulletData : SpaceObjectData<Bullet>
 {
-    public Bullet Prefab;
-    public int Damage;
-    public float AliveTimeMS;
+    [Header("Bullet Data")]
     public float Speed;
-
-
 }

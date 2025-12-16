@@ -1,7 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour, IGameSystem
 {
@@ -16,17 +13,19 @@ public class PlayerController : MonoBehaviour, IGameSystem
 
     public void Startup()
     {
-        CurrentPlayerData = App.Instance.GameData.PlayerData;
-        m_bulletData = CurrentPlayerData.Bullets;
         Game.Instance.InputManager.OnMove += OnMoveInput;
         Game.Instance.InputManager.OnLook_GamePad += OnLookGamePadInput;
         Game.Instance.InputManager.OnLook_Mouse += OnLookMouseInput;
         Game.Instance.InputManager.OnShootPressed += Shoot;
-        m_bulletPool.Warm(m_bulletData.Prefab, 12, m_bulletPoolTransform);
     }
 
     public void ReadyPlayer() 
     {
+        var playerIndex = UnityEngine.Random.Range(0, App.Instance.GameData.PlayerData.Length);
+        CurrentPlayerData = App.Instance.GameData.PlayerData[playerIndex];
+        m_bulletData = CurrentPlayerData.Bullets;
+        m_bulletPool.Clear();
+        m_bulletPool.Warm(m_bulletData.Prefab, 12, m_bulletPoolTransform);
         if (m_player != null)
         {
             GameObject.Destroy(m_player.gameObject);
@@ -40,23 +39,20 @@ public class PlayerController : MonoBehaviour, IGameSystem
     {
         var bullet = m_bulletPool.Allocate();
         bullet.transform.position = m_player.BulletRoot;
-
-
         var direction = (m_debugLookVectorTarget.transform.position - bullet.transform.position).normalized;
-        bullet.Move(direction, m_bulletData);
+        bullet.Setup(direction, m_bulletData);
         bullet.gameObject.SetActive(true);
     }
 
-    private void OnDamageTaken()
+    private void OnDamageTaken(int amount)
     {
-        Game.Instance.PlayerTakenDamage(1);
+        Game.Instance.PlayerTakenDamage(amount);
     }
-
-
 
     public void ShutDown()
     {
         GameObject.Destroy(m_player);
+        m_bulletPool.Clear();
     }
 
     internal void OnMoveInput(Vector2 movement)

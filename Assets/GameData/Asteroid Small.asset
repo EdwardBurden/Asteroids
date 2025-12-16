@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
   Name: Asteroid Small
   Prefab: {fileID: 2399992297712953638, guid: a60196c0f2e4b4042a570b598c1815e0, type: 3}
-  MinSpeed: 0
-  MaxSpeed: 2
-  ColliderWithAsteroids: 1
-  AliveTimeMS: 9000
-  Score: 0
-  m_childAsteroids: []
   Damage: 1
+  IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 64
   Health: 1
-  InvunerableTimeMS: 1
+  InvunerableTimeSeconds: 0.3
+  LifeTimeSeconds: -1
+  MaxSpeed: 5
+  MinSpeed: 5
+  Score: 100
+  m_childAsteroids: []

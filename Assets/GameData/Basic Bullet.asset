@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796cde9b55c177d41891e3b9c127dbb4, type: 3}
   m_Name: Basic Bullet
   m_EditorClassIdentifier: Assembly-CSharp::BulletData
+  Name: basic Bullet
   Prefab: {fileID: 5315715566424423104, guid: 02c033b8ac061644b8911d2d5f68fdde, type: 3}
   Damage: 1
-  AliveTimeMS: 500
+  IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  Health: 1
+  InvunerableTimeSeconds: 0.3
+  LifeTimeSeconds: 0.5
   Speed: 10

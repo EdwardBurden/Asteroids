@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3c5a8c01eadec74e953499898a50600, type: 3}
-  m_Name: Asteroid Too Big
+  m_Name: Asteroid Cascade
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
   Name: Asteroid Big
   Prefab: {fileID: 2399992297712953638, guid: 97ac0fd8de064bd4d9207c7c48c3622c, type: 3}
-  MinSpeed: 1
-  MaxSpeed: 1
-  ColliderWithAsteroids: 0
-  AliveTimeMS: 9000
-  Score: 0
+  Damage: 1
+  IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  Health: 1
+  InvunerableTimeSeconds: 0.3
+  LifeTimeSeconds: -1
+  MaxSpeed: 5
+  MinSpeed: 5
+  Score: 100
   m_childAsteroids:
   - {fileID: 11400000, guid: c8941d1feff4ec34bb8f4d2adf02eee1, type: 2}
   - {fileID: 11400000, guid: c8941d1feff4ec34bb8f4d2adf02eee1, type: 2}
-  Damage: 1
-  Health: 1
-  InvunerableTimeMS: 1

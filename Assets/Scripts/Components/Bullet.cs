@@ -2,52 +2,32 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Bullet : PooledGameObject
+public sealed class Bullet : PooledGameObject
 {
-
-    private WaitForSeconds m_aliveTime;
-    private Vector2 direction;
+    [SerializeField] private DamageComponent m_damageComponent;
+    [SerializeField] private HealthComponent m_healthComponent;
+    [SerializeField] private ConstantMovementComponent m_constantMovementComponent;
 
     private BulletData m_data;
-    public float TimeAlive { get; private set; }
 
-
-
-    private void OnEnable()
-    {
-        StartCoroutine(CountDownLife());
-    }
-
-    private IEnumerator CountDownLife()
-    {
-        yield return m_aliveTime;
-        if (this.gameObject != null || this.isActiveAndEnabled)
-        {
-            Destroy();
-        }
-    }
-
-    private void Update()
-    {
-        this.transform.position += new Vector3(direction.x , direction.y, 0) * m_data.Speed* Time.deltaTime;
-        TimeAlive += Time.deltaTime;
-    }
-
-    internal void Move(Vector3 forward, BulletData data)
+    public void Setup(Vector3 forward, BulletData data)
     {
         m_data = data;
-        TimeAlive = 0;
-        m_aliveTime = new WaitForSeconds(data.AliveTimeMS / 1000);
-        direction = forward;
+        m_constantMovementComponent.Setup(new MovementParameters(forward), m_data.Speed);
+        if (m_damageComponent != null)
+        {
+            m_damageComponent.Setup(data.Damage, m_data.IgnoreLayers);
+        }
 
+        if (m_healthComponent != null)
+        {
+            m_healthComponent.Setup(health: 1, invunerableTime: 0, lifeTime: data.LifeTimeSeconds);
+            m_healthComponent.HealthDepleted += OnHealthDepleted;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnHealthDepleted()
     {
-        if (other.tag == "Player")
-        {
-            return;
-        }
         Destroy();
     }
 }

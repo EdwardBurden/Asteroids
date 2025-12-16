@@ -2,18 +2,11 @@ using Unity.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Asteroid", menuName = "GameData/AsteroidData")]    
-public class AsteroidData : ScriptableObject
+public class AsteroidData : SpaceObjectData<Asteroid>
 {
-    public string Name;
-    public Asteroid Prefab;
-    public int MinSpeed;
-    public int MaxSpeed;
-    public bool ColliderWithAsteroids = true;
-    public float AliveTimeMS;
+    [Header("Asteroid Data")]
+    public float MaxSpeed;
+    public float MinSpeed;
     public int Score;
     public AsteroidData[] m_childAsteroids;
-    public int Damage;
-    public int Health;
-    public int InvunerableTimeMS;
-    //etc
 }

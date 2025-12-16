@@ -42,7 +42,6 @@ public class GameObjectPool<T> : IPool where T : PooledGameObject
 
     public T Allocate()
     {
-        //todo add choice to add more or error when max reached
         if (m_inactivePool.Count == 0 && m_allowResize)
         {
             SpawnInternal();
@@ -61,6 +60,14 @@ public class GameObjectPool<T> : IPool where T : PooledGameObject
         m_inactivePool.Push((T)activeObject);
         m_deSpawnCallback?.Invoke((T)activeObject);
     }
+
+    public void Clear()
+    {
+        Utils.DestoryAllChildren(m_parent);
+        m_activePool.Clear();
+        m_inactivePool.Clear();
+        m_deSpawnCallback = null;
+    }
 }
 
 public interface IPoolable
@@ -72,16 +79,15 @@ public abstract class PooledGameObject : MonoBehaviour, IPoolable
 {
     private IPool m_poolHandle;
 
-    public void Destroy()
+    protected void Destroy()
     {
         m_poolHandle.Free(this);
         this.gameObject.SetActive(false);
-        StopAllCoroutines();
+        StopAllCoroutines(); //check later if needed
     }
 
     public void Spawn(IPool poolHandle)
     {
         m_poolHandle = poolHandle;
-        //this.gameObject.SetActive(true);
     }
 }

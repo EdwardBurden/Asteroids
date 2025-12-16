@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class Rotator : MonoBehaviour
+public sealed class Rotator : MonoBehaviour
 {
     [SerializeField] private float m_initialSpeed;
     [SerializeField] private Vector3 m_rotationAmountsEuler;

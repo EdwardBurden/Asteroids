@@ -1,35 +1,34 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
-public class Asteroid : PooledGameObject
+public sealed class Asteroid : PooledGameObject
 {
-    [SerializeField] private Rotator m_rotator;
     [SerializeField] private DamageComponent m_damageComponent;
     [SerializeField] private HealthComponent m_healthComponent;
-
-    public Vector3 direction;
+    [SerializeField] private ConstantMovementComponent m_constantMovementComponent;
 
     private AsteroidData m_data;
 
     public void Setup(AsteroidData data)
     {
         m_data = data;
-        direction = new Vector3(UnityEngine.Random.Range(1f, -1f), UnityEngine.Random.Range(1f, -1f), 0);
+
+        if (m_constantMovementComponent != null)
+        {
+            var direction = Vector2Extensions.Random2DVectorIn3D();
+            var speed = UnityEngine.Random.Range(m_data.MinSpeed, m_data.MaxSpeed);
+            m_constantMovementComponent.Setup(new MovementParameters(direction), speed);
+        }
+
         if (m_damageComponent != null)
         {
-            m_damageComponent.Setup(data.Damage);
+            m_damageComponent.Setup(m_data.Damage , m_data.IgnoreLayers);
         }
-        if (m_healthComponent != null) 
+
+        if (m_healthComponent != null)
         {
-            m_healthComponent.Setup(data.Health , data.InvunerableTimeMS);
+            m_healthComponent.Setup(m_data.Health, m_data.InvunerableTimeSeconds, lifeTime: m_data.LifeTimeSeconds);
             m_healthComponent.HealthDepleted += OnHealthDepleted;
         }
-    }
-
-    private void Update()
-    {
-        this.transform.position += direction * m_data.MaxSpeed *Time.deltaTime;
     }
 
     private void OnDisable()
@@ -40,7 +39,7 @@ public class Asteroid : PooledGameObject
         }
     }
 
-    private void OnHealthDepleted() 
+    private void OnHealthDepleted()
     {
         Game.Instance.AsteroidManager.SpawnChildren(this, m_data);
         Game.Instance.AsteroidManager.SpawnCollisonFX(this.transform.position);

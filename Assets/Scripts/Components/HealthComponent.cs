@@ -19,15 +19,27 @@ public class HealthComponent : MonoBehaviour
     private Color m_originalColour;
     private float m_invunerableTimer;
 
-    public void Setup(int health, float invunerableTime)
+    private WaitForSeconds m_lifeTime;
+
+    public void Setup(int health, float invunerableTime, float lifeTime = -1)
     {
         m_initialHealth = health;
         m_currentHealth = m_initialHealth;
         m_invunerableTime = invunerableTime;
-        IsInvunerable = false;
         m_originalColour = m_icon.color;
-        m_flashGapSeconds =  new WaitForSeconds(m_flashGap);
+        m_flashGapSeconds = new WaitForSeconds(m_flashGap);
         IsInvunerable = true; // give grace 
+        if (lifeTime > 0)
+        {
+            m_lifeTime = new WaitForSeconds(lifeTime);
+            StartCoroutine(CountDownLife());
+        }
+    }
+
+    private void ForceKill()
+    {
+        m_currentHealth = 0;
+        HealthDepleted?.Invoke();
     }
 
     public void TakeDamage(int amount)
@@ -76,11 +88,20 @@ public class HealthComponent : MonoBehaviour
         }
     }
 
+    private IEnumerator CountDownLife()
+    {
+        yield return m_lifeTime;
+        if (this.gameObject != null || this.isActiveAndEnabled)
+        {
+            ForceKill();
+        }
+    }
+
     IEnumerator InvunerableFlashAnim()
     {
         bool flashToggle = false;
         while (IsInvunerable)
-        {  
+        {
             flashToggle = !flashToggle;
             m_icon.color = flashToggle ? m_originalColour : m_flashColour;
             yield return m_flashGapSeconds;

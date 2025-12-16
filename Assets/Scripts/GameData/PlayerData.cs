@@ -2,12 +2,9 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Player", menuName = "GameData/PlayerData")]
-public class PlayerData : ScriptableObject
+public class PlayerData : SpaceObjectData<Player>
 {
-    public string Name;
-    public Player Prefab;
-    public int Health;
-    public int InvunerableTimeMS;
+    [Header("Player Data")]
     public float BulletSpawnIntervalMS;
     public BulletData Bullets;
     public Sprite PlayerIconAlive;
