@@ -9,5 +9,8 @@ public class PlayerData : SpaceObjectData<Player>
     public BulletData Bullets;
     public Sprite PlayerIconAlive;
     public Sprite PlayerIconDead;
-    public float Speed;
+    public float MinSpeed;
+    public float MaxSpeed;
+    public float Acceleration;
+    public float Damping;
 }

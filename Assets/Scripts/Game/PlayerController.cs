@@ -45,10 +45,11 @@ public class PlayerController : MonoBehaviour, IGameSystem
 
     private void Shoot()
     {
+        //todo use bullet reload time here
         var bullet = m_bulletPool.Allocate();
         bullet.transform.position = m_player.BulletRoot;
-        var direction = (m_debugLookVectorTarget.transform.position - bullet.transform.position).normalized;
-        bullet.Setup(direction, m_bulletData);
+        //var direction = (m_debugLookVectorTarget.transform.position - bullet.transform.position).normalized;
+        bullet.Setup(m_player.transform.up, m_bulletData);
         bullet.gameObject.SetActive(true);
     }
 
@@ -59,7 +60,8 @@ public class PlayerController : MonoBehaviour, IGameSystem
 
     internal void OnMoveInput(Vector2 movement)
     {
-        m_player.transform.position += new Vector3(movement.x, movement.y) * Time.deltaTime * CurrentPlayerData.Speed;
+        m_player.Move(movement);
+       // m_player.transform.position += new Vector3(movement.x, movement.y) * Time.deltaTime * CurrentPlayerData.Speed;
     }
 
     internal void OnLookGamePadInput(Vector2 movement)

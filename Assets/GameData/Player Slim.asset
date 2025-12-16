@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de8c1de04f2026a498f1f824fbc9e89b, type: 3}
-  m_Name: Player
+  m_Name: Player Slim
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
   Name: Player
-  Prefab: {fileID: 3641499879743083933, guid: d465a29d409a26943a642d3096e2adea, type: 3}
+  Prefab: {fileID: 3641499879743083933, guid: 84eafa41d45b33c43a0e54ac78b0db18, type: 3}
   Damage: 1
   IgnoreLayers:
     serializedVersion: 2
     m_Bits: 384
-  Health: 20
+  Health: 3
   InvunerableTimeSeconds: 0.3
   LifeTimeSeconds: -1
   BulletSpawnIntervalMS: 0
@@ -27,5 +27,5 @@ MonoBehaviour:
   PlayerIconDead: {fileID: 21300000, guid: 6dc44d4be49b9904fafed34ecbbda2ad, type: 3}
   MinSpeed: 0
   MaxSpeed: 50
-  Acceleration: 0.09
-  Damping: 0.09
+  Acceleration: 0.4
+  Damping: 0.25

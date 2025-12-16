@@ -43,13 +43,27 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
     public void SpawnWave(int level)
     {
         var gameData = App.Instance.GameData;
+        var levelData = gameData.LevelData[level];
         var amountToSpawn = UnityEngine.Random.Range(gameData.LevelData[level].MinAsteroids, gameData.LevelData[level].MaxAsteroids);
+        var asteroidsLength = levelData.asteroidlevelDatas.Length;
         for (int i = 0; i < amountToSpawn; i++)
         {
-            var dataIndex = UnityEngine.Random.Range(0, gameData.AsteroidData.Length);
-            var data = gameData.AsteroidData[dataIndex];
+            var dataIndex = 0;
+            var random = UnityEngine.Random.value;
+            var total = 0f;
+            for (int j = 0; j < asteroidsLength; j++)
+            {
+                total += levelData.asteroidlevelDatas[j].SpawnChance;
+                if (random <= total)
+                {
+                    dataIndex = j;
+                    break;
+                }
+            }
+
+            var data = levelData.asteroidlevelDatas[dataIndex];
             var point = Game.Instance.LevelManager.GetRandomPointInBounds();
-            SpawnAsteroid(data, point);
+            SpawnAsteroid(data.Asteroid, point);
         }
     }
 

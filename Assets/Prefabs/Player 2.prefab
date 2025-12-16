@@ -47,8 +47,9 @@ GameObject:
   - component: {fileID: 4013666059100146128}
   - component: {fileID: -8623217545698329693}
   - component: {fileID: 3169512524529980122}
+  - component: {fileID: 4328825324400051847}
   m_Layer: 8
-  m_Name: Player
+  m_Name: Player 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +65,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.44, y: 0.474, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6392828827351565370}
@@ -135,7 +136,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 2205da47586b079459636f30cfa7f07e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.25866985, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -269,3 +270,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c6dd6c80f6db6458dbd883a5785635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelBoundedObject
+--- !u!114 &4328825324400051847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2991939022622321827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e669e94385bcb6d40a7c7dea99a4b264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageComponent

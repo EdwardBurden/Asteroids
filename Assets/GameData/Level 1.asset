@@ -17,3 +17,6 @@ MonoBehaviour:
   MinAsteroids: 1
   MaxAsteroids: 3
   MaxTime: 10
+  asteroidlevelDatas:
+  - SpawnChance: 1
+    Asteroid: {fileID: 11400000, guid: 998379a24da30ad4fae5288c081b5e6a, type: 2}

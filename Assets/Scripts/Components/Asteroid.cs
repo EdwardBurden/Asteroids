@@ -16,7 +16,7 @@ public sealed class Asteroid : PooledGameObject
         {
             var direction = Vector2Extensions.Random2DVectorIn3D();
             var speed = UnityEngine.Random.Range(m_data.MinSpeed, m_data.MaxSpeed);
-            m_constantMovementComponent.Setup(new MovementParameters(direction), speed);
+            m_constantMovementComponent.Setup(direction , new MovementParameters(), speed);
         }
 
         if (m_damageComponent != null)

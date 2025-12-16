@@ -21,4 +21,4 @@ MonoBehaviour:
   Health: 1
   InvunerableTimeSeconds: 0.3
   LifeTimeSeconds: 1
-  Speed: 10
+  Speed: 30

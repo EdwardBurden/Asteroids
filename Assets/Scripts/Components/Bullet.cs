@@ -13,7 +13,7 @@ public sealed class Bullet : PooledGameObject
     public void Setup(Vector3 forward, BulletData data)
     {
         m_data = data;
-        m_constantMovementComponent.Setup(new MovementParameters(forward), m_data.Speed);
+        m_constantMovementComponent.Setup(forward , new MovementParameters(), m_data.Speed);
         if (m_damageComponent != null)
         {
             m_damageComponent.Setup(data.Damage, m_data.IgnoreLayers);

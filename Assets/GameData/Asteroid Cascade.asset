@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Asteroid Cascade
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
   Name: Asteroid Big
-  Prefab: {fileID: 2399992297712953638, guid: 97ac0fd8de064bd4d9207c7c48c3622c, type: 3}
+  Prefab: {fileID: 2399992297712953638, guid: 9dda83577c5e1ed4a89ed0b27effa170, type: 3}
   Damage: 1
   IgnoreLayers:
     serializedVersion: 2
     m_Bits: 0
-  Health: 1
+  Health: 5
   InvunerableTimeSeconds: 0.3
   LifeTimeSeconds: -1
   MaxSpeed: 5
