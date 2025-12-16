@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour
+public class HUD : MonoBehaviour, IGameSystem
 {
     [SerializeField] private Transform m_playerHealthRoot;
     [SerializeField] private GameObject m_playerHealthPrefab;
@@ -16,15 +16,10 @@ public class HUD : MonoBehaviour
     private Game.GameStateData m_cachedState;
     private GameObject[] m_healthObjects;
 
-    public void Setup()
+    public void Startup()
     {
-        for (int i = 0; i < m_playerHealthRoot.childCount; i++)
-        {
-            GameObject.Destroy(m_playerHealthRoot.GetChild(i).gameObject);
-
-        }
-
-
+        Debug.Log($"{nameof(HUD)} StartUp");
+        TearDown();
         var playerData = Game.Instance.PlayerController.CurrentPlayerData;
         m_healthObjects = new GameObject[playerData.Health];
         for (int i = 0; i < playerData.Health; i++)
@@ -33,6 +28,21 @@ public class HUD : MonoBehaviour
             icon.GetComponent<Image>().sprite = playerData.PlayerIconAlive; //todo remove expensive getcomponent call
             m_healthObjects[i] = icon;
         }
+        m_score.text = "0";
+        m_level.text = "0";
+    }
+
+    public void ShutDown()
+    {
+        Debug.Log($"{nameof(HUD)} ShutDown");
+        TearDown();
+        m_winScreen.SetActive(false);
+        m_loseScreen.SetActive(false);
+    }
+
+    private void TearDown()
+    {
+        Utils.DestoryAllChildren(m_playerHealthRoot);
     }
 
     public void UpdateHUD(Game.GameStateData m_gameStateData) //todo break up as callbacks instead.
@@ -42,12 +52,12 @@ public class HUD : MonoBehaviour
             m_score.text = m_gameStateData.Score.ToString();
         }
 
-        if (m_cachedState.Level != m_gameStateData.Level) 
+        if (m_cachedState.Level != m_gameStateData.Level)
         {
             m_level.text = m_gameStateData.Level.ToString();
         }
 
-        if (m_cachedState.PlayerHealthRemaining != m_gameStateData.PlayerHealthRemaining) 
+        if (m_cachedState.PlayerHealthRemaining != m_gameStateData.PlayerHealthRemaining)
         {
             var playerData = Game.Instance.PlayerController.CurrentPlayerData;
             for (int i = 0; i < m_healthObjects.Length; i++)
@@ -61,28 +71,28 @@ public class HUD : MonoBehaviour
         m_cachedState = m_gameStateData;
     }
 
-    public void Action_Replay() 
+    public void Action_Replay()
     {
         Game.Instance.Replay();
     }
 
-    internal void ShowWonScreen()
+    public void ShowWonScreen()
     {
         m_winScreen.SetActive(true);
     }
 
-    internal void HideWonScreen()
+    public void HideWonScreen()
     {
         m_winScreen.SetActive(false);
     }
 
-    internal void ShowLostScreen()
+    public void ShowLostScreen()
     {
-        m_winScreen.SetActive(true);
+        m_loseScreen.SetActive(true);
     }
 
-    internal void HideLostScreen()
+    public void HideLostScreen()
     {
-        m_winScreen.SetActive(false);
+        m_loseScreen.SetActive(false);
     }
 }

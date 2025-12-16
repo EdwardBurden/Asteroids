@@ -11,7 +11,6 @@ public sealed partial class Game : MonoBehaviour
         m_gameStateData.PlayerHealthRemaining = m_playerController.CurrentPlayerData.Health;
         StartNextLevel();
         m_playerController.ReadyPlayer();
-        m_hud.Setup();
     }
 
     private void StartNextLevel()
@@ -41,9 +40,11 @@ public sealed partial class Game : MonoBehaviour
             return;
         }
 
-        m_gameStateData.Level++;
+        LevelComplete();
         StartNextLevel();
     }
+
+
     private void Playing_OnExit(GameState nextState)
     {
         //todo cleanup

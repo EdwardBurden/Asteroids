@@ -26,13 +26,12 @@ public class App : MonoBehaviour
     public void StartUp() //app startup 
     {
         Assert.IsNotNull(m_gameData, "Game Data is required");
-
         StartGame();
     }
 
     public void ShutDown() //app shutdown
     {
-     
+
 
     }
 
@@ -44,6 +43,17 @@ public class App : MonoBehaviour
     public IEnumerator LoadGame()
     {
         m_loadingSpinner.SetActive(true);
+        if (m_game != null)
+        {
+            m_game.ShutDown();
+           var op =  SceneManager.UnloadSceneAsync(m_gameSceneIndex);
+            op.allowSceneActivation = false;
+            while (!op.isDone)
+            {
+                yield return null;
+            }
+        }
+        yield return m_sleep;
         var asyncOp = SceneManager.LoadSceneAsync(m_gameSceneIndex, LoadSceneMode.Additive);
         asyncOp.allowSceneActivation = true;
         while (!asyncOp.isDone)
@@ -60,10 +70,10 @@ public class App : MonoBehaviour
         m_game.StartGame();
     }
 
-    public void LeaveGame() 
-    { 
+    public void LeaveGame()
+    {
         //tell game to 
-    // todo unload game scene
-    
+        // todo unload game scene
+
     }
 }

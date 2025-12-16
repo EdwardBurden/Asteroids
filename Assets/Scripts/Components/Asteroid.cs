@@ -43,6 +43,7 @@ public sealed class Asteroid : PooledGameObject
     {
         Game.Instance.AsteroidManager.SpawnChildren(this, m_data);
         Game.Instance.AsteroidManager.SpawnCollisonFX(this.transform.position);
+        Game.Instance.CreditPlayerScore(m_data.Score);
         Destroy();
     }
 }

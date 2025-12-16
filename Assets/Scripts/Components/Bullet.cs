@@ -24,6 +24,18 @@ public sealed class Bullet : PooledGameObject
             m_healthComponent.Setup(health: 1, invunerableTime: 0, lifeTime: data.LifeTimeSeconds);
             m_healthComponent.HealthDepleted += OnHealthDepleted;
         }
+
+        var rotation = Quaternion.LookRotation(Vector3.forward, forward);
+        transform.transform.rotation = rotation;
+    }
+
+
+    private void OnDisable()
+    {
+        if (m_healthComponent != null)
+        {
+            m_healthComponent.HealthDepleted -= OnHealthDepleted;
+        }
     }
 
     private void OnHealthDepleted()

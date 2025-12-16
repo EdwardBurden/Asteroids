@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
 
 
-public class AsteroidManager : MonoBehaviour
+public class AsteroidManager : MonoBehaviour, IGameSystem
 {
+    private const int AsteroidPoolSize = 20;
+    private const int FXPoolSize = 10;
+
     [SerializeField] private Transform m_poolParent;
     [SerializeField] private PooledParticle m_collsionPrefab;
 
@@ -15,18 +16,28 @@ public class AsteroidManager : MonoBehaviour
 
     private readonly HashSet<Asteroid> m_managerAsteroids = new HashSet<Asteroid>();
 
-    public void Setup(int poolSize = 12)  //only call once
+    public void Startup()
     {
+        Debug.Log($"{nameof(AsteroidManager)} StartUp");
         var gameData = App.Instance.GameData;
         foreach (AsteroidData obstacleDefinition in gameData.AsteroidData)
         {
             var pool = new GameObjectPool<Asteroid>();
-            pool.Warm(obstacleDefinition.Prefab, poolSize, m_poolParent, deSpawnCallback: OnAsteroidDespawned);
+            pool.Warm(obstacleDefinition.Prefab, AsteroidPoolSize, m_poolParent, deSpawnCallback: OnAsteroidDespawned);
             m_asteroidPools.Add(obstacleDefinition, pool);
         }
 
-        m_collisonParticles.Warm(m_collsionPrefab, poolSize, m_poolParent);
+        m_collisonParticles.Warm(m_collsionPrefab, FXPoolSize, m_poolParent);
+    }
 
+    public void ShutDown()
+    {
+        Debug.Log($"{nameof(AsteroidManager)} ShutDown");
+        foreach (var (key, pool) in m_asteroidPools)
+        {
+            pool.Clear();
+        }
+        m_collisonParticles.Clear();
     }
 
     public void SpawnWave(int level)
@@ -37,24 +48,16 @@ public class AsteroidManager : MonoBehaviour
         {
             var dataIndex = UnityEngine.Random.Range(0, gameData.AsteroidData.Length);
             var data = gameData.AsteroidData[dataIndex];
-            SpawnAsteroid(data);
+            var point = Game.Instance.LevelManager.GetRandomPointInBounds();
+            SpawnAsteroid(data, point);
         }
     }
 
-    private void SpawnAsteroid(AsteroidData asteroidData,Vector3 position)
+    private void SpawnAsteroid(AsteroidData asteroidData, Vector3 position)
     {
         var asteroid = m_asteroidPools[asteroidData].Allocate();
         asteroid.Setup(asteroidData);
         asteroid.transform.position = position;
-        m_managerAsteroids.Add(asteroid);
-        asteroid.gameObject.SetActive(true);
-    }
-
-    private void SpawnAsteroid(AsteroidData asteroidData)
-    {
-        var asteroid = m_asteroidPools[asteroidData].Allocate();
-        asteroid.Setup(asteroidData);
-        asteroid.transform.position = Game.Instance.LevelManager.GetRandomPointInBounds();
         m_managerAsteroids.Add(asteroid);
         asteroid.gameObject.SetActive(true);
     }
@@ -71,7 +74,6 @@ public class AsteroidManager : MonoBehaviour
         m_managerAsteroids.Remove(asteroid);
     }
 
-
     internal int AsteroidsRemaining()
     {
         return m_managerAsteroids.Count;
@@ -81,7 +83,7 @@ public class AsteroidManager : MonoBehaviour
     {
         foreach (var child in data.m_childAsteroids)
         {
-            SpawnAsteroid(child,asteroid.transform.position);
+            SpawnAsteroid(child, asteroid.transform.position);
         }
     }
 }

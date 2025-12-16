@@ -38,6 +38,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
 
     public void Startup()
     {
+        Debug.Log($"{nameof(GameInputManager)} StartUp");
         m_move = InputSystem.actions.FindAction(MoveActionName);
         m_look = InputSystem.actions.FindAction(LookActionName);
         m_shoot = InputSystem.actions.FindAction(ShootActionName);
@@ -46,16 +47,19 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         m_inputPaused = false;
     }
 
+    public void ShutDown()
+    {
+        Debug.Log($"{nameof(GameInputManager)} ShutDown");
+        m_shoot.performed -= M_shoot_performed;
+        m_initialised = false;
+        m_inputPaused = true;
+    }
+
     private void M_shoot_performed(InputAction.CallbackContext obj)
     {
         if (m_inputPaused)
             return;
         OnShootPressed?.Invoke();
-    }
-
-    public void ShutDown()
-    {
-        // throw new System.NotImplementedException();
     }
 
     private void Update()
@@ -68,7 +72,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         OnLookPerformed();
     }
 
-    private void M_playerInput_onControlsChanged( )
+    private void M_playerInput_onControlsChanged()
     {
         if (!m_initialised)
             return;
@@ -86,8 +90,6 @@ public class GameInputManager : MonoBehaviour, IGameSystem
             Assert.Fail($"Device: {m_playerInput.currentControlScheme} is not supported");
         }
     }
-
-
 
     private void OnMovePerformed()
     {
@@ -107,9 +109,9 @@ public class GameInputManager : MonoBehaviour, IGameSystem
                 }
                 break;
             case SupportedInputDevices.MouseAndKeyboard:
-              var value =   Mouse.current.position.ReadValue();
+                var value = Mouse.current.position.ReadValue();
                 Debug.Log(value);
-                var world = Camera.main.ScreenToWorldPoint( new Vector3( value.x , value.y , 0));
+                var world = Camera.main.ScreenToWorldPoint(new Vector3(value.x, value.y, 0));
                 world = new Vector3((float)world.x, (float)world.y, 0);
                 OnLook_Mouse?.Invoke(lookFrameData, world);
                 break;
@@ -123,7 +125,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         m_inputPaused = true;
     }
 
-    public void ResumeInput() 
+    public void ResumeInput()
     {
         m_inputPaused = false;
     }

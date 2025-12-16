@@ -11,7 +11,7 @@ public sealed partial class Game : MonoBehaviour
         Paused,
         Lost,
         Won,
-        Leaving
+        Replay
     }
     public struct GameStateData //todo
     {
@@ -41,41 +41,21 @@ public sealed partial class Game : MonoBehaviour
         Instance = this;
     }
 
-    //   private GameState m_gameState;
     private GameStateData m_gameStateData;
-
     SimpleStateMachine<GameState> m_gameStatemachine = new SimpleStateMachine<GameState>();
-
-
-    public void StartGame()
-    {
-        m_gameStatemachine.ChangeState(GameState.Playing);
-    }
-
-    public void OnPlayerDies() { } // told my playermanager
-
-
-    public void OnLevelCleared() { } //told by levelmanager
-
-    private void Update()
-    {
-        m_gameStatemachine.Update();
-
-    }
 
     public void Startup()
     {
         m_levelManager.Startup();
         m_playerInput.Startup();
         m_playerController.Startup();
-        m_asteroidManager.Setup();
+        m_asteroidManager.Startup();
+        m_hud.Startup();
+        m_gameStatemachine.RegisterState(GameState.Loading, onUpdate: () => { m_gameStatemachine.ChangeState(GameState.Playing); }); //todo
         m_gameStatemachine.RegisterState(GameState.Playing, Playing_OnEnter, Playing_OnUpdate, Playing_OnExit);
         m_gameStatemachine.RegisterState(GameState.Lost, Lost_OnEnter, Lost_OnUpdate, Lost_OnExit);
         m_gameStatemachine.RegisterState(GameState.Won, Won_OnEnter, Won_OnUpdate, Won_OnExit);
-        m_gameStatemachine.RegisterState(GameState.Loading, onUpdate : ()=> 
-        {
-            m_gameStatemachine.ChangeState(GameState.Playing);
-        }); //todo add method with wait time maybe
+        m_gameStatemachine.RegisterState(GameState.Replay, onEnter: Replay_OnEnter);
         m_gameStatemachine.Init(GameState.Loading);
         //m_gameStatemachine.RegisterState(GameState.Paused, Playing_OnEnter, Playing_OnUpdate, Playing_OnExit);
     }
@@ -84,17 +64,39 @@ public sealed partial class Game : MonoBehaviour
     {
         m_levelManager.ShutDown();
         m_playerInput.ShutDown();
+        m_playerController.ShutDown();
+        m_asteroidManager.ShutDown();
         m_gameStatemachine.Shutdown();
+        m_hud.ShutDown();
     }
 
-    internal void PlayerTakenDamage(int damageTaken)
+    public void StartGame()
+    {
+        m_gameStatemachine.ChangeState(GameState.Playing);
+    }
+
+    private void Update()
+    {
+        m_gameStatemachine.Update();
+    }
+
+    public void PlayerTakenDamage(int damageTaken)
     {
         m_gameStateData.PlayerHealthRemaining -= damageTaken;
     }
 
-    internal void Replay()
+    public void CreditPlayerScore(int score)
     {
-        //any restart work.
-        m_gameStatemachine.ChangeState(GameState.Playing);
+        m_gameStateData.Score += score;
+    }
+
+    public void LevelComplete() 
+    {
+        m_gameStateData.Level++;
+    }
+
+    public void Replay()
+    {
+        m_gameStatemachine.ChangeState(GameState.Replay);
     }
 }

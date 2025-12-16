@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class DamageComponent : MonoBehaviour
 {
     private int m_damage;
     private LayerMask m_ignoreLayers;
+
     public void Setup(int damage, LayerMask ignoreLayers)
     {
         m_damage = damage;

@@ -17,8 +17,8 @@ MonoBehaviour:
   Damage: 1
   IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
   Health: 1
   InvunerableTimeSeconds: 0.3
-  LifeTimeSeconds: 0.5
+  LifeTimeSeconds: 1
   Speed: 10

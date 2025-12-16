@@ -46,7 +46,10 @@ public class SimpleStateMachine<T> where T : Enum
             m_currentState = m_pendingState;
             m_statePending = false;
         }
-        m_states[m_currentState].OnStateUpdate?.Invoke();
+        if (m_states.TryGetValue(m_currentState, out var stateCallbacks))
+        {
+            stateCallbacks.OnStateUpdate?.Invoke();
+        }
     }
 
     public void ChangeState(T state)
@@ -75,6 +78,6 @@ public class SimpleStateMachine<T> where T : Enum
     public void Shutdown()
     {
         m_states.Clear();
-        m_initialised= false;
+        m_initialised = false;
     }
 }

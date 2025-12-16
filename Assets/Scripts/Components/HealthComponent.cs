@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
+    //todo clean ups
     [SerializeField] private float m_flashGap;
     [SerializeField] private SpriteRenderer m_icon;
     [SerializeField] private Color m_flashColour;
@@ -19,21 +20,21 @@ public class HealthComponent : MonoBehaviour
     private Color m_originalColour;
     private float m_invunerableTimer;
 
-    private WaitForSeconds m_lifeTime;
+    private float m_lifeTime;
+    private WaitForSeconds m_lifeTimeSeconds;
+    private Coroutine m_lifeTimeCountdown;
 
     public void Setup(int health, float invunerableTime, float lifeTime = -1)
     {
+        m_lifeTimeCountdown = null;
         m_initialHealth = health;
         m_currentHealth = m_initialHealth;
         m_invunerableTime = invunerableTime;
         m_originalColour = m_icon.color;
         m_flashGapSeconds = new WaitForSeconds(m_flashGap);
         IsInvunerable = true; // give grace 
-        if (lifeTime > 0)
-        {
-            m_lifeTime = new WaitForSeconds(lifeTime);
-            StartCoroutine(CountDownLife());
-        }
+        m_lifeTime = lifeTime;
+        m_lifeTimeSeconds = new WaitForSeconds(m_lifeTime);
     }
 
     private void ForceKill()
@@ -69,7 +70,22 @@ public class HealthComponent : MonoBehaviour
 
     private void OnDisable()
     {
-        StopAllCoroutines();
+        if (m_lifeTimeCountdown != null)
+        {
+            StopCoroutine(m_lifeTimeCountdown);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (m_lifeTimeCountdown != null)
+        {
+            StopCoroutine(m_lifeTimeCountdown);
+        }
+        if (m_lifeTime > 0)
+        {
+            m_lifeTimeCountdown = StartCoroutine(CountDownLife());
+        }
     }
 
     private void Update()
@@ -90,7 +106,7 @@ public class HealthComponent : MonoBehaviour
 
     private IEnumerator CountDownLife()
     {
-        yield return m_lifeTime;
+        yield return m_lifeTimeSeconds;
         if (this.gameObject != null || this.isActiveAndEnabled)
         {
             ForceKill();

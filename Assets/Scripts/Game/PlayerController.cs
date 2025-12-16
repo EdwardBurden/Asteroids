@@ -13,19 +13,27 @@ public class PlayerController : MonoBehaviour, IGameSystem
 
     public void Startup()
     {
+        Debug.Log($"{nameof(PlayerController)} Startup");
+        var playerIndex = UnityEngine.Random.Range(0, App.Instance.GameData.PlayerData.Length);
+        CurrentPlayerData = App.Instance.GameData.PlayerData[playerIndex];
+        m_bulletData = CurrentPlayerData.Bullets;
+        m_bulletPool.Clear();
+        m_bulletPool.Warm(m_bulletData.Prefab, 12, m_bulletPoolTransform);
         Game.Instance.InputManager.OnMove += OnMoveInput;
         Game.Instance.InputManager.OnLook_GamePad += OnLookGamePadInput;
         Game.Instance.InputManager.OnLook_Mouse += OnLookMouseInput;
         Game.Instance.InputManager.OnShootPressed += Shoot;
     }
 
+    public void ShutDown()
+    {
+        Debug.Log($"{nameof(PlayerController)} ShutDown");
+        GameObject.Destroy(m_player);
+        m_bulletPool.Clear();
+    }
+
     public void ReadyPlayer() 
     {
-        var playerIndex = UnityEngine.Random.Range(0, App.Instance.GameData.PlayerData.Length);
-        CurrentPlayerData = App.Instance.GameData.PlayerData[playerIndex];
-        m_bulletData = CurrentPlayerData.Bullets;
-        m_bulletPool.Clear();
-        m_bulletPool.Warm(m_bulletData.Prefab, 12, m_bulletPoolTransform);
         if (m_player != null)
         {
             GameObject.Destroy(m_player.gameObject);
@@ -47,12 +55,6 @@ public class PlayerController : MonoBehaviour, IGameSystem
     private void OnDamageTaken(int amount)
     {
         Game.Instance.PlayerTakenDamage(amount);
-    }
-
-    public void ShutDown()
-    {
-        GameObject.Destroy(m_player);
-        m_bulletPool.Clear();
     }
 
     internal void OnMoveInput(Vector2 movement)
