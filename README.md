@@ -36,8 +36,6 @@ Slim is fast but the controls might be hard to handle.
 
 Wide is slow and drops mines instead of shooting bullets, he can also can ram asteroids to deal damage and will recover health over time.
 
-You can also add multiple player 
-
 
 
 
