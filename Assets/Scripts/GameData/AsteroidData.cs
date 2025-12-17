@@ -1,4 +1,3 @@
-using Unity.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Asteroid", menuName = "GameData/AsteroidData")]    

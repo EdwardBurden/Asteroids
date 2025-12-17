@@ -18,9 +18,10 @@ MonoBehaviour:
   IgnoreLayers:
     serializedVersion: 2
     m_Bits: 384
-  Health: 20
-  InvunerableTimeSeconds: 0.3
+  Health: 8
+  InvunerableTimeSeconds: 0.8
   LifeTimeSeconds: -1
+  HealthRecoveryTime: -1
   BulletSpawnIntervalMS: 0
   Bullets: {fileID: 11400000, guid: 098332caa7655ef4190da326661746a0, type: 2}
   PlayerIconAlive: {fileID: 21300000, guid: d13e3f44f5025d4478c98a607270939f, type: 3}

@@ -4,19 +4,19 @@ using UnityEngine;
 public class GameData : ScriptableObject
 {
     [SerializeField] private int m_seed;
-    [SerializeField] private AsteroidData[] m_asteroidData; //todo have these collected  without manyall pulling in
+    [SerializeField] private AsteroidData[] m_asteroidData;
     [SerializeField] private LevelData[] m_levelData;
-    [SerializeField] private PlayerData[] m_playerData; //for futrue player picking 
-  public Sprite LostBackground;
+    [SerializeField] private PlayerData[] m_playerData;
+    public Sprite LostBackground; //todo put in some data container 
     public Sprite WonBackground;
 
     public AsteroidData[] AsteroidData => m_asteroidData;
-    public LevelData[] LevelData => m_levelData;   
-    public PlayerData[]  PlayerData => m_playerData;
+    public LevelData[] LevelData => m_levelData;
+    public PlayerData[] PlayerData => m_playerData;
     public bool UseSeed => m_seed != 0;
     public int Seed => m_seed;
+    public int MaxLevel => m_levelData.Length - 1;
 
-    public int MaxLevel => m_levelData.Length -1;
     private void OnValidate()
     {
         //make sure only one of this exists in the project

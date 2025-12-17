@@ -1,30 +1,28 @@
-using NUnit.Framework;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+
+public enum SupportedInputDevices
+{
+    GamePad,
+    MouseAndKeyboard
+}
 
 public class GameInputManager : MonoBehaviour, IGameSystem
 {
-    public enum SupportedInputDevices
-    {
-        GamePad,
-        MouseAndKeyboard
-    }
-
-    [SerializeField] private PlayerInput m_playerInput;
-    [SerializeField] private float m_deadZoneAmount = 0.05f;
     private const string MoveActionName = "Move";
     private const string LookActionName = "Look";
     private const string ShootActionName = "Attack";
 
-    public SupportedInputDevices CurrentInput { get; private set; }
+    [SerializeField] private PlayerInput m_playerInput;
+    [SerializeField] private float m_deadZoneAmount = 0.05f;
 
     private InputAction m_move;
     private InputAction m_look;
     private InputAction m_shoot;
-    private InputAction m_pause;
-    private InputAction m_exit;
+    private InputAction m_pause; //todo
+    private InputAction m_exit; //todo
 
     public delegate void MouseDelegate(Vector2 movement, Vector3 mousePosition);
     public delegate void GamePadDelegate(Vector2 movement);
@@ -32,9 +30,11 @@ public class GameInputManager : MonoBehaviour, IGameSystem
     public event GamePadDelegate OnMove;
     public event MouseDelegate OnLook_Mouse;
     public event GamePadDelegate OnLook_GamePad;
-    public Action OnShootPressed;
+    public event Action OnShootPressed;
+
     private bool m_initialised;
     private bool m_inputPaused;
+    public SupportedInputDevices CurrentInput { get; private set; }
 
     public void Startup()
     {
@@ -42,7 +42,6 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         m_move = InputSystem.actions.FindAction(MoveActionName);
         m_look = InputSystem.actions.FindAction(LookActionName);
         m_shoot = InputSystem.actions.FindAction(ShootActionName);
-        m_shoot.performed += M_shoot_performed;
         m_initialised = true;
         m_inputPaused = false;
     }
@@ -50,16 +49,8 @@ public class GameInputManager : MonoBehaviour, IGameSystem
     public void ShutDown()
     {
         Debug.Log($"{nameof(GameInputManager)} ShutDown");
-        m_shoot.performed -= M_shoot_performed;
         m_initialised = false;
         m_inputPaused = true;
-    }
-
-    private void M_shoot_performed(InputAction.CallbackContext obj)
-    {
-        if (m_inputPaused)
-            return;
-        OnShootPressed?.Invoke();
     }
 
     private void Update()
@@ -67,12 +58,16 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         if (!m_initialised || m_inputPaused)
             return;
 
-        M_playerInput_onControlsChanged();
+        CheckControlChanged();
         OnMovePerformed();
         OnLookPerformed();
+        if (m_shoot.IsPressed())
+        {
+            OnShootPressed?.Invoke();
+        }
     }
 
-    private void M_playerInput_onControlsChanged()
+    private void CheckControlChanged()
     {
         if (!m_initialised)
             return;
@@ -87,7 +82,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         }
         else
         {
-            Assert.Fail($"Device: {m_playerInput.currentControlScheme} is not supported");
+            Debug.LogError($"Device: {m_playerInput.currentControlScheme} is not supported");
         }
     }
 
@@ -110,9 +105,8 @@ public class GameInputManager : MonoBehaviour, IGameSystem
                 break;
             case SupportedInputDevices.MouseAndKeyboard:
                 var value = Mouse.current.position.ReadValue();
-                Debug.Log(value);
                 var world = Camera.main.ScreenToWorldPoint(new Vector3(value.x, value.y, 0));
-                world = new Vector3((float)world.x, (float)world.y, 0);
+                world = new Vector3(world.x, world.y, 0);
                 OnLook_Mouse?.Invoke(lookFrameData, world);
                 break;
             default:
@@ -120,7 +114,7 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         }
     }
 
-    internal void PauseInput()
+    public void PauseInput()
     {
         m_inputPaused = true;
     }

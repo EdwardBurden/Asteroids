@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +12,7 @@ public class HUD : MonoBehaviour, IGameSystem
     [SerializeField] private TMP_Text m_score;
     [SerializeField] private TMP_Text m_level;
 
-    private Game.GameStateData m_cachedState;
+    private GameStateData m_cachedState;
     private GameObject[] m_healthObjects;
 
     public void Startup()
@@ -45,7 +44,7 @@ public class HUD : MonoBehaviour, IGameSystem
         Utils.DestoryAllChildren(m_playerHealthRoot);
     }
 
-    public void UpdateHUD(Game.GameStateData m_gameStateData) //todo break up as callbacks instead.
+    public void UpdateHUD(GameStateData m_gameStateData) //todo break up as callbacks instead.
     {
         if (m_cachedState.Score != m_gameStateData.Score)
         {

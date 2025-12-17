@@ -1,12 +1,7 @@
 using UnityEngine;
 
-
 public sealed class Rotator : MonoBehaviour
 {
-    [SerializeField] private float m_initialSpeed;
-    [SerializeField] private Vector3 m_rotationAmountsEuler;
-    [SerializeField] private float m_damping;
-
     private float m_rotationSpeed;
     private Vector3 m_rotaionAmountNormalized;
 
@@ -25,7 +20,5 @@ public sealed class Rotator : MonoBehaviour
     {
         var updateRotation = m_rotaionAmountNormalized * Time.deltaTime * m_rotationSpeed;
         this.transform.Rotate(updateRotation, Space.Self);
-        if (m_rotationSpeed - m_damping > 0)
-            m_rotationSpeed -= m_damping * Time.deltaTime;
     }
 }

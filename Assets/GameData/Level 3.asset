@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   Name: Level 3
   Background: {fileID: 21300000, guid: be2bb16650cd580448bd17b034a54a63, type: 3}
-  MinAsteroids: 10
-  MaxAsteroids: 12
+  MinAsteroids: 3
+  MaxAsteroids: 8
   MaxTime: 10
   asteroidlevelDatas:
   - SpawnChance: 0.5

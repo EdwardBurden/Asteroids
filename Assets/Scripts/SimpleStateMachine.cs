@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 public struct StateCallbacks<T>
@@ -55,7 +54,7 @@ public class SimpleStateMachine<T> where T : Enum
     public void ChangeState(T state)
     {
         if (m_statePending)
-            return; //ignore if already set for now // TODO make proper state machien later
+            return;
 
         m_pendingState = state;
         m_statePending = true;
@@ -64,14 +63,12 @@ public class SimpleStateMachine<T> where T : Enum
     public void RegisterState(T state, StateCallbacks<T> callbacks)
     {
         Assert.IsTrue(!m_states.ContainsKey(state), "You registered same state twice");
-
         m_states[state] = callbacks;
     }
 
     public void RegisterState(T state, Action<T> onEnter = null, Action onUpdate = null, Action<T> onExit = null)
     {
         Assert.IsTrue(!m_states.ContainsKey(state), "You registered same state twice");
-
         m_states[state] = new StateCallbacks<T>() { OnStateEnter = onEnter, OnStateUpdate = onUpdate, OnStateExit = onExit };
     }
 

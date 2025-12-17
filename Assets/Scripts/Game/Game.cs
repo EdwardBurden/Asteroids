@@ -1,6 +1,11 @@
-using System;
 using UnityEngine;
-using static UnityEngine.Audio.GeneratorInstance;
+public struct GameStateData
+{
+    public int Level;
+    public int Seed;
+    public int Score;
+    public int PlayerHealthRemaining;
+}
 
 public sealed partial class Game : MonoBehaviour
 {
@@ -8,27 +13,19 @@ public sealed partial class Game : MonoBehaviour
     {
         Loading,
         Playing,
-        Paused,
+        Paused, //todo
         Lost,
         Won,
         Replay
     }
-    public struct GameStateData //todo
-    {
-        public int Level;
-        public int Seed;
-        public int Score;
-        public int PlayerHealthRemaining;
-    }
 
-    //[SerializeField] ObstacleSpawner m_obstacleSpawner;
     [SerializeField] private LevelManager m_levelManager;
     [SerializeField] private GameInputManager m_playerInput;
     [SerializeField] private PlayerController m_playerController;
     [SerializeField] private AsteroidManager m_asteroidManager;
     [SerializeField] private HUD m_hud;
 
-    public static Game Instance { get; private set; }
+    public static Game Instance { get; private set; } //todo remove and replace with IGameSystem ServiceLocator
     public LevelManager LevelManager => m_levelManager;
 
     public AsteroidManager AsteroidManager => m_asteroidManager;
@@ -36,13 +33,14 @@ public sealed partial class Game : MonoBehaviour
     public PlayerController PlayerController => m_playerController;
     public GameStateData GAmeStateData => m_gameStateData;
 
+    private GameStateData m_gameStateData;
+    SimpleStateMachine<GameState> m_gameStatemachine = new SimpleStateMachine<GameState>();
+
+
     private void Awake()
     {
         Instance = this;
     }
-
-    private GameStateData m_gameStateData;
-    SimpleStateMachine<GameState> m_gameStatemachine = new SimpleStateMachine<GameState>();
 
     public void Startup()
     {
@@ -85,12 +83,17 @@ public sealed partial class Game : MonoBehaviour
         m_gameStateData.PlayerHealthRemaining -= damageTaken;
     }
 
+    public void PlayerGainedHealth(int amount)
+    {
+        m_gameStateData.PlayerHealthRemaining += amount;
+    }
+
     public void CreditPlayerScore(int score)
     {
         m_gameStateData.Score += score;
     }
 
-    public void LevelComplete() 
+    public void LevelComplete()
     {
         m_gameStateData.Level++;
     }

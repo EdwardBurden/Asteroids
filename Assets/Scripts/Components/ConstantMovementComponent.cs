@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public struct MovementParameters
@@ -20,7 +19,7 @@ public struct MovementParameters
 public class ConstantMovementComponent : MonoBehaviour //todo rename to be more abstarct
 {
     protected MovementParameters m_movementParameters;
-    protected float m_currentSpeed; //current
+    protected float m_currentSpeed;
     protected Vector3 m_targetDirection;
 
     public virtual void Setup(Vector2 targetDirection, MovementParameters movementParameters, float initialSpeed = 0f)
@@ -29,7 +28,6 @@ public class ConstantMovementComponent : MonoBehaviour //todo rename to be more 
         m_movementParameters = movementParameters;
         m_currentSpeed = initialSpeed;
     }
-
 
     protected virtual void Update()
     {

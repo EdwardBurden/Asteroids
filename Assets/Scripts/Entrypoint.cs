@@ -15,6 +15,11 @@ public class Entrypoint : MonoBehaviour
         //TODO
     }
 
+    private void OnApplicationPause(bool pause)
+    {
+        //TODO
+    }
+
     private void Start()
     {
         App.Instance.StartUp(); 

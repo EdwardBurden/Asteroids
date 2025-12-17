@@ -1,5 +1,4 @@
 using UnityEngine;
-using static Game;
 
 public sealed partial class Game : MonoBehaviour
 {

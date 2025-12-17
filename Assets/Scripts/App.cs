@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -23,16 +22,16 @@ public class App : MonoBehaviour
         Instance = this;
     }
 
-    public void StartUp() //app startup 
+    public void StartUp()
     {
         Assert.IsNotNull(m_gameData, "Game Data is required");
         StartGame();
     }
 
-    public void ShutDown() //app shutdown
+    public void ShutDown()
     {
-
-
+        //TODO cleanup app specific things
+        //StartCoroutine(CloseGameScene()); //maybe dont need to do this
     }
 
     public void StartGame()
@@ -40,19 +39,24 @@ public class App : MonoBehaviour
         StartCoroutine(LoadGame());
     }
 
-    public IEnumerator LoadGame()
+    private IEnumerator CloseGameScene()
     {
-        m_loadingSpinner.SetActive(true);
         if (m_game != null)
         {
             m_game.ShutDown();
-           var op =  SceneManager.UnloadSceneAsync(m_gameSceneIndex);
+            var op = SceneManager.UnloadSceneAsync(m_gameSceneIndex);
             op.allowSceneActivation = false;
             while (!op.isDone)
             {
                 yield return null;
             }
         }
+    }
+
+    public IEnumerator LoadGame()
+    {
+        m_loadingSpinner.SetActive(true);
+        yield return StartCoroutine(CloseGameScene());
         yield return m_sleep;
         var asyncOp = SceneManager.LoadSceneAsync(m_gameSceneIndex, LoadSceneMode.Additive);
         asyncOp.allowSceneActivation = true;
@@ -61,19 +65,11 @@ public class App : MonoBehaviour
             yield return null;
         }
         m_loadingSpinner.SetActive(false);
-
         yield return m_sleep;
         var game = GameObject.FindObjectsByType<Game>(FindObjectsSortMode.None);
         Assert.IsTrue(game.Length == 1, "Only One game should exist in the game scene");
         m_game = game[0];
         m_game.Startup();
         m_game.StartGame();
-    }
-
-    public void LeaveGame()
-    {
-        //tell game to 
-        // todo unload game scene
-
     }
 }

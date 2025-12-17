@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "Level", menuName = "GameData/LevelData")]
 public class LevelData : ScriptableObject
 {
@@ -11,10 +10,7 @@ public class LevelData : ScriptableObject
     public int MaxAsteroids;
     public float MaxTime;
 
-    public AsteroidlevelData[] asteroidlevelDatas;
-
-    //tood have list of obstacles for this level
-    // phaes? maybe use a curve to define amoutn of obstacles to spawn rate
+    public AsteroidlevelData[] asteroidlevelDatas; //Placeholder need proper system for this later
 }
 
 [Serializable]

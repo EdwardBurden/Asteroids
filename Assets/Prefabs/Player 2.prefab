@@ -86,6 +86,7 @@ MonoBehaviour:
   m_bulletRoot: {fileID: 6392828827351565370}
   m_healthComponent: {fileID: 4013666059100146128}
   m_movementComponent: {fileID: -8623217545698329693}
+  m_damageComponent: {fileID: 4328825324400051847}
 --- !u!212 &8543658072287163754
 SpriteRenderer:
   serializedVersion: 2

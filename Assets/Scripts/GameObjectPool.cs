@@ -1,18 +1,37 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
-
 
 public interface IPool
 {
     public void Free(IPoolable poolable);
 }
+public interface IPoolable
+{
+    public void Spawn(IPool poolHandl);
+}
+
+public abstract class PooledGameObject : MonoBehaviour, IPoolable
+{
+    private IPool m_poolHandle;
+
+    protected void Destroy()
+    {
+        m_poolHandle.Free(this);
+        this.gameObject.SetActive(false);
+        StopAllCoroutines(); //check later if needed
+    }
+
+    public void Spawn(IPool poolHandle)
+    {
+        m_poolHandle = poolHandle;
+    }
+}
 
 public class GameObjectPool<T> : IPool where T : PooledGameObject
 {
-    private readonly Stack<T> m_inactivePool = new Stack<T>();
-    private readonly List<T> m_activePool = new List<T>();
+    private readonly Stack<T> m_inactivePool = new();
+    private readonly List<T> m_activePool = new();
     private bool m_allowResize;
     private Transform m_parent;
     private T m_prefab;
@@ -67,27 +86,5 @@ public class GameObjectPool<T> : IPool where T : PooledGameObject
         m_activePool.Clear();
         m_inactivePool.Clear();
         m_deSpawnCallback = null;
-    }
-}
-
-public interface IPoolable
-{
-    public void Spawn(IPool poolHandl);
-}
-
-public abstract class PooledGameObject : MonoBehaviour, IPoolable
-{
-    private IPool m_poolHandle;
-
-    protected void Destroy()
-    {
-        m_poolHandle.Free(this);
-        this.gameObject.SetActive(false);
-        StopAllCoroutines(); //check later if needed
-    }
-
-    public void Spawn(IPool poolHandle)
-    {
-        m_poolHandle = poolHandle;
     }
 }

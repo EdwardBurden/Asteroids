@@ -9,17 +9,17 @@ public sealed partial class Game : MonoBehaviour
         m_gameStateData.Seed = App.Instance.GameData.UseSeed ? App.Instance.GameData.Seed : (int)System.DateTime.Now.Ticks;
         UnityEngine.Random.InitState(m_gameStateData.Seed);
         m_gameStateData.PlayerHealthRemaining = m_playerController.CurrentPlayerData.Health;
-        StartNextLevel();
         m_playerController.ReadyPlayer();
+        StartNextLevel();
+        
     }
 
     private void StartNextLevel()
     {
         var levelData = App.Instance.GameData.GetLevelData(m_gameStateData.Level);
         m_levelManager.StartLevel(m_gameStateData.Level);
-        m_asteroidManager.SpawnWave(m_gameStateData.Level);
+        m_asteroidManager.SpawnWave(m_gameStateData.Level, m_playerController.PlayerPosition);
     }
-
 
     private void Playing_OnUpdate()
     {
@@ -43,7 +43,6 @@ public sealed partial class Game : MonoBehaviour
         LevelComplete();
         StartNextLevel();
     }
-
 
     private void Playing_OnExit(GameState nextState)
     {

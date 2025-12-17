@@ -30,12 +30,25 @@ public class LevelManager : MonoBehaviour, IGameSystem
         Debug.Log($"{nameof(LevelManager)} ShutDown");
     }
 
-    public Vector2 GetRandomPointInBounds()
+    public Vector2 GetRandomPointInBounds(Vector3 avoidPosition, float area, int maxAttempts = 3)
     {
-        var halfSize = (m_worldSize - m_boundMargin) / 2;
-        var x = m_worldCenter.x + UnityEngine.Random.Range(-halfSize.x, halfSize.x);
-        var y = m_worldCenter.y + UnityEngine.Random.Range(-halfSize.y, halfSize.y);
-        return new Vector2(x, y);
+        var attempt = 0;
+        var success = false;
+        var point = Vector3.zero;
+        while (attempt < maxAttempts || !success)
+        {
+            var halfSize = (m_worldSize - m_boundMargin) / 2;
+            var x = m_worldCenter.x + UnityEngine.Random.Range(-halfSize.x, halfSize.x);
+            var y = m_worldCenter.y + UnityEngine.Random.Range(-halfSize.y, halfSize.y);
+            point = new Vector2(x, y);
+            if (Vector3.Distance(avoidPosition, point) > area)
+            {
+                success = true;
+            }
+            attempt++;
+
+        }
+        return point;
     }
 
     private void OnDrawGizmos()
@@ -85,7 +98,7 @@ public class LevelManager : MonoBehaviour, IGameSystem
         return mirroredPos;
     }
 
-    public void SetBackground(Sprite sprite) 
+    public void SetBackground(Sprite sprite)
     {
         m_background.sprite = sprite;
     }

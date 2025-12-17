@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public sealed class Bullet : PooledGameObject
@@ -28,7 +26,6 @@ public sealed class Bullet : PooledGameObject
         var rotation = Quaternion.LookRotation(Vector3.forward, forward);
         transform.transform.rotation = rotation;
     }
-
 
     private void OnDisable()
     {

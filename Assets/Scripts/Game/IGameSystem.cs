@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IGameSystem
 {
     public void Startup();

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 796cde9b55c177d41891e3b9c127dbb4, type: 3}
-  m_Name: Basic Bullet
+  m_Name: Mine
   m_EditorClassIdentifier: Assembly-CSharp::BulletData
-  Name: basic Bullet
-  Prefab: {fileID: 5315715566424423104, guid: 02c033b8ac061644b8911d2d5f68fdde, type: 3}
+  Name: Mine
+  Prefab: {fileID: 5315715566424423104, guid: 31276f53fb26cb441ad5bac5976b207c, type: 3}
   Damage: 1
   IgnoreLayers:
     serializedVersion: 2
     m_Bits: 384
   Health: 1
   InvunerableTimeSeconds: 0.3
-  LifeTimeSeconds: 1
+  LifeTimeSeconds: 5
   HealthRecoveryTime: -1
-  Speed: 30
-  ReloadTime: 0.1
+  Speed: 0
+  ReloadTime: 1

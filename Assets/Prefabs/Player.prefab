@@ -242,9 +242,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64c7a554523e7349b92d0ffa531e1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  m_flashGap: 0.2
+  m_flashGap: 0.15
   m_icon: {fileID: 8543658072287163754}
-  m_flashColour: {r: 0.6603774, g: 0, b: 0, a: 0.4627451}
+  m_flashColour: {r: 0.6603774, g: 0, b: 0, a: 1}
 --- !u!114 &-8623217545698329693
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 using UnityEngine;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class PlayerMovementComponent : ConstantMovementComponent
 {
@@ -25,8 +24,7 @@ public class PlayerMovementComponent : ConstantMovementComponent
         }
 
         m_velocity = Vector2.ClampMagnitude(m_velocity, m_movementParameters.Maxpeed);
-
-
+        //todo min speed clamp
         this.transform.position += m_velocity*Time.deltaTime;
     }
 }

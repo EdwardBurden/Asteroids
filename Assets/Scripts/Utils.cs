@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public static class Utils
 {
     public static void DestoryAllChildren(Transform transform)

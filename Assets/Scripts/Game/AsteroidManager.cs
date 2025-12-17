@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 public class AsteroidManager : MonoBehaviour, IGameSystem
 {
     private const int AsteroidPoolSize = 20;
     private const int FXPoolSize = 10;
+    private const int PlayerDistance = 5;
 
     [SerializeField] private Transform m_poolParent;
     [SerializeField] private PooledParticle m_collsionPrefab;
@@ -40,7 +39,7 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
         m_collisonParticles.Clear();
     }
 
-    public void SpawnWave(int level)
+    public void SpawnWave(int level, Vector3 player)
     {
         var gameData = App.Instance.GameData;
         var levelData = gameData.LevelData[level];
@@ -62,7 +61,7 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
             }
 
             var data = levelData.asteroidlevelDatas[dataIndex];
-            var point = Game.Instance.LevelManager.GetRandomPointInBounds();
+            var point = Game.Instance.LevelManager.GetRandomPointInBounds(player , PlayerDistance); //todo move to 
             SpawnAsteroid(data.Asteroid, point);
         }
     }
@@ -88,7 +87,7 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
         m_managerAsteroids.Remove(asteroid);
     }
 
-    internal int AsteroidsRemaining()
+    public int AsteroidsRemaining()
     {
         return m_managerAsteroids.Count;
     }

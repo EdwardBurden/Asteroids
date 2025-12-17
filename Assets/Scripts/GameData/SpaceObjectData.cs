@@ -13,5 +13,5 @@ public abstract class SpaceObjectData<T> : ScriptableObject where T : MonoBehavi
     public int Health = 1;
     public float InvunerableTimeSeconds = 0.3f;
     public float LifeTimeSeconds = -1f;
-    public float HealthRecoveryTime = -1f; // meanign none
+    public float HealthRecoveryTime = -1f;
 }
