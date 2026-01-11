@@ -1,16 +1,22 @@
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour, IGameSystem
+public class LevelManager : IService
 {
-    [SerializeField] private SpriteRenderer m_background;
-    [SerializeField] private Vector2 m_boundMargin = new Vector2(2, 2);
+    private SpriteRenderer m_background;
+    private Vector2 m_boundMargin = new Vector2(2, 2);
 
     private Vector2 m_worldSize;
     private Vector2 m_worldCenter; //todo make vec
 
+    public LevelManager(Game game, GameSceneReference gameSceneReference) 
+    {
+        m_background = gameSceneReference.Background;
+        m_boundMargin = gameSceneReference.BoundMargin;
+    }
+
     public void StartLevel(int level)
     {
-        var gameData = App.Instance.GameData;
+        var gameData = ServiceLocator.GetService<GameDataManager>().GameData;
         var levelData = gameData.GetLevelData(level);
         m_background.sprite = levelData.Background;
     }
@@ -101,5 +107,10 @@ public class LevelManager : MonoBehaviour, IGameSystem
     public void SetBackground(Sprite sprite)
     {
         m_background.sprite = sprite;
+    }
+
+    public void Update()
+    {
+     //   throw new System.NotImplementedException();
     }
 }

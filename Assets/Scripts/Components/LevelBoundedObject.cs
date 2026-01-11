@@ -4,13 +4,10 @@ public sealed class LevelBoundedObject : MonoBehaviour
 {
     private void Update()
     {
-        if (Game.Instance == null)
+        if (ServiceLocator.GetService<LevelManager>().IsGameObjectInBounds(this.transform.gameObject))
             return;
 
-        if (Game.Instance.LevelManager.IsGameObjectInBounds(this.transform.gameObject))
-            return;
-
-        var newPos = Game.Instance.LevelManager.CalculateMirroredPosition(this.transform.gameObject);
+        var newPos = ServiceLocator.GetService<LevelManager>().CalculateMirroredPosition(this.transform.gameObject);
         this.transform.position = newPos;
     }
 }

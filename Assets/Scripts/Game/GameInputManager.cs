@@ -9,14 +9,14 @@ public enum SupportedInputDevices
     MouseAndKeyboard
 }
 
-public class GameInputManager : MonoBehaviour, IGameSystem
+public class GameInputManager : IService
 {
     private const string MoveActionName = "Move";
     private const string LookActionName = "Look";
     private const string ShootActionName = "Attack";
 
-    [SerializeField] private PlayerInput m_playerInput;
-    [SerializeField] private float m_deadZoneAmount = 0.05f;
+    private PlayerInput m_playerInput;
+    private float m_deadZoneAmount = 0.05f;
 
     private InputAction m_move;
     private InputAction m_look;
@@ -36,6 +36,12 @@ public class GameInputManager : MonoBehaviour, IGameSystem
     private bool m_inputPaused;
     public SupportedInputDevices CurrentInput { get; private set; }
 
+    public GameInputManager(Game game, GameSceneReference gameSceneReference) 
+    {
+        m_playerInput = gameSceneReference.PlayerInput;
+        m_deadZoneAmount = gameSceneReference.DeadZoneAmount;
+    }
+
     public void Startup()
     {
         Debug.Log($"{nameof(GameInputManager)} StartUp");
@@ -51,20 +57,6 @@ public class GameInputManager : MonoBehaviour, IGameSystem
         Debug.Log($"{nameof(GameInputManager)} ShutDown");
         m_initialised = false;
         m_inputPaused = true;
-    }
-
-    private void Update()
-    {
-        if (!m_initialised || m_inputPaused)
-            return;
-
-        CheckControlChanged();
-        OnMovePerformed();
-        OnLookPerformed();
-        if (m_shoot.IsPressed())
-        {
-            OnShootPressed?.Invoke();
-        }
     }
 
     private void CheckControlChanged()
@@ -122,5 +114,19 @@ public class GameInputManager : MonoBehaviour, IGameSystem
     public void ResumeInput()
     {
         m_inputPaused = false;
+    }
+
+    void IService.Update()
+    {
+        if (!m_initialised || m_inputPaused)
+            return;
+
+        CheckControlChanged();
+        OnMovePerformed();
+        OnLookPerformed();
+        if (m_shoot.IsPressed())
+        {
+            OnShootPressed?.Invoke();
+        }
     }
 }

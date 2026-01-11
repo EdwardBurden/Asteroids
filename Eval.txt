@@ -1,0 +1,16 @@
+:Softs
+- Why do you want the job?
+
+- Why are you leaving?
+
+:Technical
+- Singletons, service locator, dependency injection.
+- Data driven/ component approach.
+- UI architecture
+
+:Test
+- Get game state machine driving game restart
+- Add simple service locator pattern or dependency injection
+- Move App class out of monobehaviour, expose entrypoint gameobject for mono stuff
+- Decide if game should be a mono too.
+- Data setup should be streamlined. I want to have components determine behaviour but require data from SO for this, resolve this issue.

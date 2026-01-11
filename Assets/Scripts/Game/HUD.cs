@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour, IGameSystem
+public class HUD : MonoBehaviour
 {
     [SerializeField] private Transform m_playerHealthRoot;
     [SerializeField] private GameObject m_playerHealthPrefab;
@@ -19,7 +19,7 @@ public class HUD : MonoBehaviour, IGameSystem
     {
         Debug.Log($"{nameof(HUD)} StartUp");
         TearDown();
-        var playerData = Game.Instance.PlayerController.CurrentPlayerData;
+        var playerData = ServiceLocator.GetService<PlayerController>().CurrentPlayerData;
         m_healthObjects = new GameObject[playerData.Health];
         for (int i = 0; i < playerData.Health; i++)
         {
@@ -58,7 +58,7 @@ public class HUD : MonoBehaviour, IGameSystem
 
         if (m_cachedState.PlayerHealthRemaining != m_gameStateData.PlayerHealthRemaining)
         {
-            var playerData = Game.Instance.PlayerController.CurrentPlayerData;
+            var playerData = ServiceLocator.GetService<PlayerController>().CurrentPlayerData;
             for (int i = 0; i < m_healthObjects.Length; i++)
             {
                 var alive = m_gameStateData.PlayerHealthRemaining > i;
@@ -72,7 +72,7 @@ public class HUD : MonoBehaviour, IGameSystem
 
     public void Action_Replay()
     {
-        Game.Instance.Replay();
+       // Game.Instance.Replay();
     }
 
     public void ShowWonScreen()

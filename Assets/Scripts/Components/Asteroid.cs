@@ -41,9 +41,9 @@ public sealed class Asteroid : PooledGameObject
 
     private void OnHealthDepleted()
     {
-        Game.Instance.AsteroidManager.SpawnChildren(this, m_data);
-        Game.Instance.AsteroidManager.SpawnCollisonFX(this.transform.position);
-        Game.Instance.CreditPlayerScore(m_data.Score);
+     //   Game.Instance.AsteroidManager.SpawnChildren(this, m_data);
+      //  Game.Instance.AsteroidManager.SpawnCollisonFX(this.transform.position);
+      //  Game.Instance.CreditPlayerScore(m_data.Score);
         Destroy();
     }
 }

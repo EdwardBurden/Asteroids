@@ -19,36 +19,34 @@ public sealed partial class Game : MonoBehaviour
         Replay
     }
 
-    [SerializeField] private LevelManager m_levelManager;
-    [SerializeField] private GameInputManager m_playerInput;
-    [SerializeField] private PlayerController m_playerController;
-    [SerializeField] private AsteroidManager m_asteroidManager;
-    [SerializeField] private HUD m_hud;
-
-    public static Game Instance { get; private set; } //todo remove and replace with IGameSystem ServiceLocator
-    public LevelManager LevelManager => m_levelManager;
-
-    public AsteroidManager AsteroidManager => m_asteroidManager;
-    public GameInputManager InputManager => m_playerInput;
-    public PlayerController PlayerController => m_playerController;
     public GameStateData GAmeStateData => m_gameStateData;
 
     private GameStateData m_gameStateData;
     SimpleStateMachine<GameState> m_gameStatemachine = new SimpleStateMachine<GameState>();
-
-
-    private void Awake()
+    [SerializeField] private GameSceneReference m_gameSceneReference;
+    public void Awake()
     {
-        Instance = this;
+        ServiceLocator.RegisterService<LevelManager>(this, m_gameSceneReference);
+        ServiceLocator.RegisterService<GameInputManager>(this, m_gameSceneReference);
+        ServiceLocator.RegisterService<PlayerController>(this, m_gameSceneReference);
+        ServiceLocator.RegisterService<AsteroidManager>(this, m_gameSceneReference);
+    }
+
+    void OnDestroy()
+    {
+        ServiceLocator.UnRegisterService<LevelManager>();
+        ServiceLocator.UnRegisterService<GameInputManager>();
+        ServiceLocator.UnRegisterService<PlayerController>();
+        ServiceLocator.UnRegisterService<AsteroidManager>();
     }
 
     public void Startup()
     {
-        m_levelManager.Startup();
-        m_playerInput.Startup();
-        m_playerController.Startup();
-        m_asteroidManager.Startup();
-        m_hud.Startup();
+        ServiceLocator.GetService<LevelManager>().Startup();
+        ServiceLocator.GetService<GameInputManager>().Startup();
+        ServiceLocator.GetService<PlayerController>().Startup();
+        ServiceLocator.GetService<AsteroidManager>().Startup();
+        m_gameSceneReference.m_hud.Startup();
         m_gameStatemachine.RegisterState(GameState.Loading, onUpdate: () => { m_gameStatemachine.ChangeState(GameState.Playing); }); //todo
         m_gameStatemachine.RegisterState(GameState.Playing, Playing_OnEnter, Playing_OnUpdate, Playing_OnExit);
         m_gameStatemachine.RegisterState(GameState.Lost, Lost_OnEnter, Lost_OnUpdate, Lost_OnExit);
@@ -60,12 +58,13 @@ public sealed partial class Game : MonoBehaviour
 
     public void ShutDown()
     {
-        m_levelManager.ShutDown();
-        m_playerInput.ShutDown();
-        m_playerController.ShutDown();
-        m_asteroidManager.ShutDown();
+
+        ServiceLocator.GetService<LevelManager>().ShutDown();
+        ServiceLocator.GetService<GameInputManager>().ShutDown();
+        ServiceLocator.GetService<PlayerController>().ShutDown();
+        ServiceLocator.GetService<AsteroidManager>().ShutDown();
+        m_gameSceneReference.m_hud.ShutDown();
         m_gameStatemachine.Shutdown();
-        m_hud.ShutDown();
     }
 
     public void StartGame()

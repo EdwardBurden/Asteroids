@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public sealed partial class Game : MonoBehaviour
+public sealed partial class Game
 {
     private void Lost_OnEnter(GameState previousState)
     {
         Time.timeScale = 0.2f;
-        m_playerInput.PauseInput();
-        m_hud.ShowLostScreen();
-        m_levelManager.SetBackground(App.Instance.GameData.LostBackground);
+        ServiceLocator.GetService<GameInputManager>().PauseInput();
+        m_gameSceneReference.m_hud.ShowLostScreen();
+        ServiceLocator.GetService<LevelManager>().SetBackground(ServiceLocator.GetService<GameDataManager>().GameData.LostBackground);
     }
 
     private void Lost_OnUpdate()
@@ -18,7 +18,7 @@ public sealed partial class Game : MonoBehaviour
     private void Lost_OnExit(GameState nextState)
     {
         Time.timeScale = 1.0f;
-        m_playerInput.ResumeInput();
-        m_hud.HideLostScreen();
+        ServiceLocator.GetService<GameInputManager>().ResumeInput();
+        m_gameSceneReference.m_hud.HideLostScreen();
     }
 }

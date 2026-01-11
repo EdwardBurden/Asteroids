@@ -413,10 +413,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 777737749}
-  - component: {fileID: 777737748}
   - component: {fileID: 777737750}
-  - component: {fileID: 777737753}
-  - component: {fileID: 777737754}
+  - component: {fileID: 777737751}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -424,23 +422,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &777737748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777737747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df1de2270a68a244b16c4d26974379f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game
-  m_levelManager: {fileID: 777737750}
-  m_playerInput: {fileID: 1306252071}
-  m_playerController: {fileID: 777737753}
-  m_asteroidManager: {fileID: 777737754}
-  m_hud: {fileID: 780945039}
 --- !u!4 &777737749
 Transform:
   m_ObjectHideFlags: 0
@@ -466,12 +447,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 777737747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cf1ff05a6a4a704bb9ec2167894cf57, type: 3}
+  m_Script: {fileID: 11500000, guid: 0097ab053688c264895f6414ae4a3156, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  m_background: {fileID: 157856778}
-  m_boundMargin: {x: 2, y: 2}
---- !u!114 &777737753
+  m_EditorClassIdentifier: Assembly-CSharp::GameSceneReference
+  Background: {fileID: 157856778}
+  BoundMargin: {x: 5, y: 5}
+  PlayerInput: {fileID: 1306252072}
+  DeadZoneAmount: 0
+  BulletPoolTransform: {fileID: 422084871}
+  PlayerRoot: {fileID: 1293005252}
+  DebugVectorTarget: {fileID: 1702813203}
+  AsteroidPoolTransform: {fileID: 1459431450}
+  CollisionParticle: {fileID: 4999722091968989663, guid: 3648880bcc69a7f4a8750961cfa04e0d, type: 3}
+  m_hud: {fileID: 1052999428695490410}
+--- !u!114 &777737751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -480,37 +469,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 777737747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd568e82593a0c048a42e2eeb52cddca, type: 3}
+  m_Script: {fileID: 11500000, guid: 1df1de2270a68a244b16c4d26974379f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  m_bulletPoolTransform: {fileID: 422084871}
-  m_playerRoot: {fileID: 875427411}
-  m_debugLookVectorTarget: {fileID: 1702813203}
---- !u!114 &777737754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777737747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc068c974aea3df4bb57d605b769c066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AsteroidManager
-  m_poolParent: {fileID: 1459431450}
-  m_collsionPrefab: {fileID: 4999722091968989663, guid: 3648880bcc69a7f4a8750961cfa04e0d, type: 3}
---- !u!114 &780945039 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1353811546108772193, guid: eb383e639ca2ae24a8f3c03902d21dc9, type: 3}
-  m_PrefabInstance: {fileID: 1052999428695490409}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2910556e8b25b4380e11880aecbd9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HUD
+  m_EditorClassIdentifier: Assembly-CSharp::Game
+  m_gameSceneReference: {fileID: 777737750}
 --- !u!1 &875427410
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +549,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1306252073}
   - component: {fileID: 1306252072}
-  - component: {fileID: 1306252071}
   m_Layer: 0
   m_Name: Input
   m_TagString: Untagged
@@ -595,20 +556,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1306252071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1306252070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4babae395e174104eadcbc27c8a1e723, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameInputManager
-  m_playerInput: {fileID: 1306252072}
-  m_deadZoneAmount: 0.05
 --- !u!114 &1306252072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,6 +908,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb383e639ca2ae24a8f3c03902d21dc9, type: 3}
+--- !u!114 &1052999428695490410 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2468508151396974345, guid: eb383e639ca2ae24a8f3c03902d21dc9, type: 3}
+  m_PrefabInstance: {fileID: 1052999428695490409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2910556e8b25b4380e11880aecbd9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUD
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

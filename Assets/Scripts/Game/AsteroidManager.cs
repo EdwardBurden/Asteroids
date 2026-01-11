@@ -1,24 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AsteroidManager : MonoBehaviour, IGameSystem
+public class AsteroidManager : IService
 {
     private const int AsteroidPoolSize = 20;
     private const int FXPoolSize = 10;
     private const int PlayerDistance = 5;
 
-    [SerializeField] private Transform m_poolParent;
-    [SerializeField] private PooledParticle m_collsionPrefab;
+  private Transform m_poolParent;
+     private PooledParticle m_collsionPrefab;
 
     private readonly GameObjectPool<PooledParticle> m_collisonParticles = new();
     private readonly Dictionary<AsteroidData, GameObjectPool<Asteroid>> m_asteroidPools = new();
 
     private readonly HashSet<Asteroid> m_managerAsteroids = new HashSet<Asteroid>();
-
+    public AsteroidManager(Game game, GameSceneReference gameSceneReference)
+    {
+        m_poolParent = gameSceneReference.AsteroidPoolTransform;
+        m_collsionPrefab = gameSceneReference.CollisionParticle;
+    }
     public void Startup()
     {
         Debug.Log($"{nameof(AsteroidManager)} StartUp");
-        var gameData = App.Instance.GameData;
+        var gameData = ServiceLocator.GetService<GameDataManager>().GameData;
         foreach (AsteroidData obstacleDefinition in gameData.AsteroidData)
         {
             var pool = new GameObjectPool<Asteroid>();
@@ -41,7 +45,7 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
 
     public void SpawnWave(int level, Vector3 player)
     {
-        var gameData = App.Instance.GameData;
+        var gameData = ServiceLocator.GetService<GameDataManager>().GameData;
         var levelData = gameData.LevelData[level];
         var amountToSpawn = UnityEngine.Random.Range(gameData.LevelData[level].MinAsteroids, gameData.LevelData[level].MaxAsteroids);
         var asteroidsLength = levelData.asteroidlevelDatas.Length;
@@ -61,7 +65,7 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
             }
 
             var data = levelData.asteroidlevelDatas[dataIndex];
-            var point = Game.Instance.LevelManager.GetRandomPointInBounds(player , PlayerDistance); //todo move to 
+            var point = ServiceLocator.GetService<LevelManager>().GetRandomPointInBounds(player , PlayerDistance); //todo move to 
             SpawnAsteroid(data.Asteroid, point);
         }
     }
@@ -98,5 +102,10 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
         {
             SpawnAsteroid(child, asteroid.transform.position);
         }
+    }
+
+    public void Update()
+    {
+        
     }
 }

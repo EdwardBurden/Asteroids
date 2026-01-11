@@ -1293,7 +1293,7 @@ GameObject:
   - component: {fileID: 4662873917025421062}
   - component: {fileID: 2562367301764755999}
   - component: {fileID: 5422607297220465346}
-  - component: {fileID: 1353811546108772193}
+  - component: {fileID: 2468508151396974345}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1353811546108772193
+--- !u!114 &2468508151396974345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1400,7 +1400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2910556e8b25b4380e11880aecbd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUD
-  m_playerHealthRoot: {fileID: 8133350374048603692}
+  m_playerHealthRoot: {fileID: 7410182224908506348}
   m_playerHealthPrefab: {fileID: 4913269409544323725, guid: 3e7df47cf1ed661439e286838ded1798, type: 3}
   m_winScreen: {fileID: 3124617943501232605}
   m_loseScreen: {fileID: 8147004547522364323}
@@ -2191,7 +2191,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1353811546108772193}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HUD, Assembly-CSharp
         m_MethodName: Action_Replay
         m_Mode: 1
@@ -2324,7 +2324,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1353811546108772193}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HUD, Assembly-CSharp
         m_MethodName: Action_Replay
         m_Mode: 1

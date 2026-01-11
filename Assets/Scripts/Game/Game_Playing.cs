@@ -1,29 +1,29 @@
 using UnityEngine;
 
-public sealed partial class Game : MonoBehaviour
+public sealed partial class Game 
 {
     private void Playing_OnEnter(GameState previousState)
     {
         //todo check last state
         m_gameStateData.Level = 0;
-        m_gameStateData.Seed = App.Instance.GameData.UseSeed ? App.Instance.GameData.Seed : (int)System.DateTime.Now.Ticks;
+        m_gameStateData.Seed = ServiceLocator.GetService<GameDataManager>().GameData.UseSeed ? ServiceLocator.GetService<GameDataManager>().GameData.Seed : (int)System.DateTime.Now.Ticks;
         UnityEngine.Random.InitState(m_gameStateData.Seed);
-        m_gameStateData.PlayerHealthRemaining = m_playerController.CurrentPlayerData.Health;
-        m_playerController.ReadyPlayer();
+        m_gameStateData.PlayerHealthRemaining = ServiceLocator.GetService<PlayerController>().CurrentPlayerData.Health;
+        ServiceLocator.GetService<PlayerController>().ReadyPlayer();
         StartNextLevel();
         
     }
 
     private void StartNextLevel()
     {
-        var levelData = App.Instance.GameData.GetLevelData(m_gameStateData.Level);
-        m_levelManager.StartLevel(m_gameStateData.Level);
-        m_asteroidManager.SpawnWave(m_gameStateData.Level, m_playerController.PlayerPosition);
+        var levelData = ServiceLocator.GetService<GameDataManager>().GameData.GetLevelData(m_gameStateData.Level);
+        ServiceLocator.GetService<LevelManager>().StartLevel(m_gameStateData.Level);
+        ServiceLocator.GetService<AsteroidManager>().SpawnWave(m_gameStateData.Level, ServiceLocator.GetService<PlayerController>().PlayerPosition);
     }
 
     private void Playing_OnUpdate()
     {
-        m_hud.UpdateHUD(m_gameStateData);
+        m_gameSceneReference.m_hud.UpdateHUD(m_gameStateData);
 
         if (m_gameStateData.PlayerHealthRemaining <= 0) 
         {
@@ -31,10 +31,10 @@ public sealed partial class Game : MonoBehaviour
             return;
         }
 
-        if (m_asteroidManager.AsteroidsRemaining() > 0)
+        if (ServiceLocator.GetService<AsteroidManager>().AsteroidsRemaining() > 0)
             return;
 
-        if (m_gameStateData.Level >= App.Instance.GameData.MaxLevel) 
+        if (m_gameStateData.Level >= ServiceLocator.GetService<GameDataManager>().GameData.MaxLevel) 
         {
             m_gameStatemachine.ChangeState(GameState.Won);
             return;
@@ -42,6 +42,7 @@ public sealed partial class Game : MonoBehaviour
 
         LevelComplete();
         StartNextLevel();
+      
     }
 
     private void Playing_OnExit(GameState nextState)

@@ -310,7 +310,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1013970391}
   - component: {fileID: 1013970390}
-  - component: {fileID: 1013970389}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -318,21 +317,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1013970389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013970387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8674bce8700b2134c9618f07843e678f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::App
-  m_gameSceneIndex: 1
-  m_loadingSpinner: {fileID: 1130670685}
-  m_gameData: {fileID: 11400000, guid: bd4bcbc0ab436594887911f8d3ad10b9, type: 2}
 --- !u!114 &1013970390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010f0c6d078f3d94fb4c858f2418825b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entrypoint
+  m_gameSceneIndex: 1
+  m_loadingSpinner: {fileID: 757020359}
+  m_gameData: {fileID: 11400000, guid: bd4bcbc0ab436594887911f8d3ad10b9, type: 2}
 --- !u!4 &1013970391
 Transform:
   m_ObjectHideFlags: 0
