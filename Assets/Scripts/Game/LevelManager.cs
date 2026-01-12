@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelManager : IService
+public class LevelManager : IService 
 {
     private SpriteRenderer m_background;
     private Vector2 m_boundMargin = new Vector2(2, 2);

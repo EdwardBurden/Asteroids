@@ -152,4 +152,9 @@ public class HealthComponent : MonoBehaviour
         }
         m_icon.color = m_originalColour;
     }
+
+    internal void Setup()
+    {
+        throw new NotImplementedException();
+    }
 }

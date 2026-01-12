@@ -46,7 +46,7 @@ public class PlayerController : IService
         m_player = GameObject.Instantiate(CurrentPlayerData.Prefab, m_playerRoot);
         m_player.gameObject.SetActive(false);
         m_player.Setup(CurrentPlayerData);
-        m_player.Damaged += OnDamageTaken;
+        m_player.Damaged += OnDamageTaken;  // should just listen directly to the component for health?
         m_player.Healed += OnHealed;
         var inputManager = ServiceLocator.GetService<GameInputManager>();
         inputManager.OnMove += OnMoveInput;
@@ -93,7 +93,7 @@ public class PlayerController : IService
 
     internal void OnMoveInput(Vector2 movement)
     {
-        m_player.Move(movement);
+        m_player.Move(movement); //would cache playermovement component instead.
     }
 
     internal void OnLookGamePadInput(Vector2 movement)
