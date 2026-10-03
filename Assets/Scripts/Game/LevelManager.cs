@@ -51,55 +51,66 @@ public class LevelManager : MonoBehaviour, IGameSystem
         return point;
     }
 
-    private void OnDrawGizmos()
+    public Vector2 GetRandomPointInBounds()
     {
-        Gizmos.DrawCube(m_worldCenter, Vector3.one);
-        for (int i = -1; i < 2; i++)
+        var point = Vector3.zero;
+        var halfSize = (m_worldSize - m_boundMargin) / 2;
+        var x = m_worldCenter.x + UnityEngine.Random.Range(-halfSize.x, halfSize.x);
+        var y = m_worldCenter.y + UnityEngine.Random.Range(-halfSize.y, halfSize.y);
+        point = new Vector2(x, y);
+        return point;
+    }
+
+
+private void OnDrawGizmos()
+{
+    Gizmos.DrawCube(m_worldCenter, Vector3.one);
+    for (int i = -1; i < 2; i++)
+    {
+        for (int j = -1; j < 2; j++)
         {
-            for (int j = -1; j < 2; j++)
-            {
-                var target = m_worldCenter + new Vector2(i * m_worldSize.x / 2, j * m_worldSize.y / 2);
-                Gizmos.DrawSphere(target, 1);
-            }
+            var target = m_worldCenter + new Vector2(i * m_worldSize.x / 2, j * m_worldSize.y / 2);
+            Gizmos.DrawSphere(target, 1);
         }
     }
+}
 
-    public bool IsGameObjectInBounds(GameObject levelBoundedObject)
+public bool IsGameObjectInBounds(GameObject levelBoundedObject)
+{
+    var flatPos = new Vector2(levelBoundedObject.transform.position.x, levelBoundedObject.transform.position.y);
+    var halfSize = m_worldSize / 2;
+    var isInBoundary = flatPos.x < (m_worldCenter.x + halfSize.x);
+    isInBoundary &= flatPos.y < (m_worldCenter.y + halfSize.y);
+    isInBoundary &= flatPos.x > (m_worldCenter.x - halfSize.x);
+    isInBoundary &= flatPos.y > (m_worldCenter.y - halfSize.y);
+    return isInBoundary;
+}
+
+public Vector3 CalculateMirroredPosition(GameObject levelBoundedObject)
+{
+    //TODO find simpler calculation
+    var flatPos = new Vector2(levelBoundedObject.transform.position.x, levelBoundedObject.transform.position.y);
+    var mirroredPos = flatPos;
+    var halfSize = m_worldSize / 2;
+    var min = m_worldCenter - halfSize;
+    var max = m_worldCenter + halfSize;
+
+    for (var i = 0; i < 2; i++) // for x and y
     {
-        var flatPos = new Vector2(levelBoundedObject.transform.position.x, levelBoundedObject.transform.position.y);
-        var halfSize = m_worldSize / 2;
-        var isInBoundary = flatPos.x < (m_worldCenter.x + halfSize.x);
-        isInBoundary &= flatPos.y < (m_worldCenter.y + halfSize.y);
-        isInBoundary &= flatPos.x > (m_worldCenter.x - halfSize.x);
-        isInBoundary &= flatPos.y > (m_worldCenter.y - halfSize.y);
-        return isInBoundary;
-    }
-
-    public Vector3 CalculateMirroredPosition(GameObject levelBoundedObject)
-    {
-        //TODO find simpler calculation
-        var flatPos = new Vector2(levelBoundedObject.transform.position.x, levelBoundedObject.transform.position.y);
-        var mirroredPos = flatPos;
-        var halfSize = m_worldSize / 2;
-        var min = m_worldCenter - halfSize;
-        var max = m_worldCenter + halfSize;
-
-        for (var i = 0; i < 2; i++) // for x and y
+        if (flatPos[i] < min[i])
         {
-            if (flatPos[i] < min[i])
-            {
-                mirroredPos[i] = max[i];
-            }
-            else if (flatPos[i] > max[i])
-            {
-                mirroredPos[i] = min[i];
-            }
+            mirroredPos[i] = max[i];
         }
-        return mirroredPos;
+        else if (flatPos[i] > max[i])
+        {
+            mirroredPos[i] = min[i];
+        }
     }
+    return mirroredPos;
+}
 
-    public void SetBackground(Sprite sprite)
-    {
-        m_background.sprite = sprite;
-    }
+public void SetBackground(Sprite sprite)
+{
+    m_background.sprite = sprite;
+}
 }

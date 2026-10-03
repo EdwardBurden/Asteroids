@@ -6,8 +6,6 @@ public class LevelData : ScriptableObject
 {
     public string Name;
     public Sprite Background;
-    public int MinAsteroids;
-    public int MaxAsteroids;
     public float MaxTime;
 
     public AsteroidlevelData[] asteroidlevelDatas; //Placeholder need proper system for this later
@@ -16,6 +14,9 @@ public class LevelData : ScriptableObject
 [Serializable]
 public class AsteroidlevelData
 {
+    public int MinAsteroids;
+    public int MaxAsteroids;
     public float SpawnChance;
+    public float DelayAmountSeconds;
     public AsteroidData Asteroid;
 }

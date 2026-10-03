@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,31 +44,23 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
     {
         var gameData = App.Instance.GameData;
         var levelData = gameData.LevelData[level];
-        var amountToSpawn = UnityEngine.Random.Range(gameData.LevelData[level].MinAsteroids, gameData.LevelData[level].MaxAsteroids);
         var asteroidsLength = levelData.asteroidlevelDatas.Length;
-        for (int i = 0; i < amountToSpawn; i++)
+        for (int i = 0; i < gameData.LevelData[level].asteroidlevelDatas.Length; i++)
         {
-            var dataIndex = 0;
-            var random = UnityEngine.Random.value;
-            var total = 0f;
-            for (int j = 0; j < asteroidsLength; j++)
+            var data = gameData.LevelData[level].asteroidlevelDatas[i];
+            var amountToSpawn = UnityEngine.Random.Range(data.MinAsteroids, data.MaxAsteroids);
+            for (int j = 0; j < amountToSpawn; j++)
             {
-                total += levelData.asteroidlevelDatas[j].SpawnChance;
-                if (random <= total)
-                {
-                    dataIndex = j;
-                    break;
-                }
+                var point = Game.Instance.LevelManager.GetRandomPointInBounds(player, PlayerDistance); //todo move to 
+                StartCoroutine(SpawnAsteroid(data, data.Asteroid, point));
             }
 
-            var data = levelData.asteroidlevelDatas[dataIndex];
-            var point = Game.Instance.LevelManager.GetRandomPointInBounds(player , PlayerDistance); //todo move to 
-            SpawnAsteroid(data.Asteroid, point);
         }
     }
 
-    private void SpawnAsteroid(AsteroidData asteroidData, Vector3 position)
+    private IEnumerator SpawnAsteroid(AsteroidlevelData asteroidlevelData, AsteroidData asteroidData, Vector3 position)
     {
+        yield return new WaitForSeconds( asteroidlevelData.DelayAmountSeconds);
         var asteroid = m_asteroidPools[asteroidData].Allocate();
         asteroid.Setup(asteroidData);
         asteroid.transform.position = position;
@@ -96,7 +89,7 @@ public class AsteroidManager : MonoBehaviour, IGameSystem
     {
         foreach (var child in data.m_childAsteroids)
         {
-            SpawnAsteroid(child, asteroid.transform.position);
+           // SpawnAsteroid(child, asteroid.transform.position);
         }
     }
 }

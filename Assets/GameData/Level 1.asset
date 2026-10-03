@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   Name: 'Easy Level '
   Background: {fileID: 21300000, guid: be2bb16650cd580448bd17b034a54a63, type: 3}
-  MinAsteroids: 1
-  MaxAsteroids: 3
   MaxTime: 10
   asteroidlevelDatas:
-  - SpawnChance: 1
+  - MinAsteroids: 1
+    MaxAsteroids: 1
+    SpawnChance: 1
+    DelayAmountSeconds: 10
+    Asteroid: {fileID: 11400000, guid: be4c03775cf37c24cbc6c0bd914a5d32, type: 2}
+  - MinAsteroids: 1
+    MaxAsteroids: 5
+    SpawnChance: 1
+    DelayAmountSeconds: 0
     Asteroid: {fileID: 11400000, guid: 998379a24da30ad4fae5288c081b5e6a, type: 2}

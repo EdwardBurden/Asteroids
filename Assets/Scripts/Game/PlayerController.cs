@@ -85,11 +85,13 @@ public class PlayerController : MonoBehaviour, IGameSystem
 
     internal void OnMoveInput(Vector2 movement)
     {
+        // if frozen or something do this, else normal move
         m_player.Move(movement);
     }
 
     internal void OnLookGamePadInput(Vector2 movement)
     {
+        // todo should be moved into player input component like movement
         var look = new Vector3(movement.x, movement.y, 0).normalized;
         var rotation = Quaternion.LookRotation(Vector3.forward, look);
         m_player.transform.rotation = rotation;

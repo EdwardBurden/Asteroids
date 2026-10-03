@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3c5a8c01eadec74e953499898a50600, type: 3}
+  m_Name: Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
+  Name: Asteroid Big
+  Prefab: {fileID: 2399992297712953638, guid: c58b3a2ba5f3b3141bcebb051cb07be2, type: 3}
+  Damage: 1
+  IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  Health: 1
+  InvunerableTimeSeconds: 0.3
+  LifeTimeSeconds: -1
+  HealthRecoveryTime: -1
+  MaxSpeed: 5
+  MinSpeed: 5
+  Score: 100
+  m_childAsteroids: []

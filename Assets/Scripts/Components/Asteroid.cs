@@ -41,6 +41,12 @@ public sealed class Asteroid : PooledGameObject
 
     private void OnHealthDepleted()
     {
+      //  m_data.m_childAsteroids should for each
+        // Factory lookup call, using type to factory
+        // would be better to have facotry based on the thing tryign to make.
+        //Asteorid -> Asteroid Facotry, can call asteorid manager and setup
+        //AI/Enemy/ally -> AgentFactory -> agent manager , can setup and register callbacks if we wante fto spawn a 
+        // reward/piclkup -> 
         Game.Instance.AsteroidManager.SpawnChildren(this, m_data);
         Game.Instance.AsteroidManager.SpawnCollisonFX(this.transform.position);
         Game.Instance.CreditPlayerScore(m_data.Score);
